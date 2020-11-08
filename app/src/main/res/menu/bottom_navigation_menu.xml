@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@null"
+        android:id="@+id/history"
+        android:enabled="true"
+        android:icon="@drawable/history_24px"
+        />
+    <item
+        android:title="@null"
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/search_24px"
+        />
+    <item
+        android:title="@null"
+        android:id="@+id/saved"
+        android:enabled="true"
+        android:icon="@drawable/bookmark_border_24px"
+        />
+</menu>
