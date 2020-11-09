@@ -9,16 +9,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+    //RecyclerView
+    private RecyclerView mRecyclerView;
+    private ArrayList<MainRecycleritem> imageCategories = new ArrayList<>();
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //RecyclerView
+        bindCategoryData();
+        setUIRef();
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        //
         ImageButton btn = (ImageButton) findViewById(R.id.popup_menu);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -64,5 +76,38 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             default:
                 return false;
         }
+    }
+
+    private void setUIRef()
+    {
+        //Reference of RecyclerView
+        mRecyclerView = findViewById(R.id.mainPageButtons);
+        //Linear Layout Manager
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
+        //Set Layout Manager to RecyclerView
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        //Create adapter
+        MainRecyclerItemArrayAdapter myRecyclerViewAdapter = new MainRecyclerItemArrayAdapter(imageCategories, new MainRecyclerItemArrayAdapter.MyRecyclerViewItemClickListener()
+        {
+            //Handling clicks
+            @Override
+            public void onItemClicked(MainRecycleritem category)
+            {
+                Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Set adapter to RecyclerView
+        mRecyclerView.setAdapter(myRecyclerViewAdapter);
+    }
+
+    private void bindCategoryData()
+    {
+        imageCategories.add(new MainRecycleritem(R.drawable.img_diner,"Diners"));
+        imageCategories.add(new MainRecycleritem(R.drawable.img_clothing,"Clothing"));
+        imageCategories.add(new MainRecycleritem(R.drawable.img_scenery,"Scenery"));
+        imageCategories.add(new MainRecycleritem(R.drawable.img_adventure,"Adventure"));
+
     }
 }
