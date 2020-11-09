@@ -8,8 +8,9 @@
         android:id="@+id/splashIcon"
         android:layout_width="248dp"
         android:layout_height="319dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="204dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
@@ -21,7 +22,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginBottom="44dp"
         android:text="Take The Time, Explore Singapore"
-        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
