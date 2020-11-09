@@ -4,18 +4,18 @@
         android:title="@null"
         android:id="@+id/history"
         android:enabled="true"
-        android:icon="@drawable/history_24px"
+        android:icon="@drawable/ic_baseline_history_24"
         />
     <item
         android:title="@null"
         android:id="@+id/home"
         android:enabled="true"
-        android:icon="@drawable/search_24px"
+        android:icon="@drawable/ic_baseline_search_24"
         />
     <item
         android:title="@null"
         android:id="@+id/saved"
         android:enabled="true"
-        android:icon="@drawable/bookmark_border_24px"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"
         />
 </menu>
