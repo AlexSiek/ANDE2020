@@ -1,6 +1,9 @@
 package com.example.ande;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,8 +11,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +28,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     //RecyclerView
     private RecyclerView mRecyclerView;
     private ArrayList<MainRecycleritem> imageCategories = new ArrayList<>();
-    //
+
+    //Location Permission
+    private int LOCATION_PERMISSION_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.saved:
-                        Toast.makeText(MainActivity.this, "Nearby", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Saved Locations", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(MainActivity.this, SavedLocationsActivity.class);
+                        startActivity(i);
                         break;
                 }
                 return true;
@@ -69,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.setting_item:
-                Intent intent = new Intent(this,SettingActivity.class);
-                startActivity(intent);
+                // do your code
                 return true;
             case R.id.about_item:
                 // do your code
@@ -96,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onItemClicked(MainRecycleritem category)
             {
+                checkReadPermission();
                 Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -111,5 +122,50 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         imageCategories.add(new MainRecycleritem(R.drawable.img_scenery,"Scenery"));
         imageCategories.add(new MainRecycleritem(R.drawable.img_adventure,"Adventure"));
 
+    }
+    // LOCATION PERMISSION
+    private void checkReadPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+        }else {
+            requestLocationPermission();
+        }
+    }
+
+    private void requestLocationPermission() {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("Location is needed to explore places!")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //if permission is denied
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        }else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_PERMISSION_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == LOCATION_PERMISSION_CODE) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(MainActivity.this, "location permission GRANTED", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(MainActivity.this, "location permission DENIED", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

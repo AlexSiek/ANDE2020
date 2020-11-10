@@ -10,4 +10,9 @@
     <color name="background">#FFFFFF </color>
     <color name="switchOnColor" android:state_checked="true">#00966B</color>
     <color name="seekbarColor">#00966B</color>
+    <color name="ratingbarColorFilled">#FFD600</color>
+    <color name="ratingbarColorUnfilled">#C9C9C9</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#269201</color>
+
 </resources>
