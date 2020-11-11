@@ -48,13 +48,13 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
 
         int imageId = locationItem.get(position).getImage();
         String name = locationItem.get(position).getName();
-        float rating = locationItem.get(position).getRating();
+        double rating = locationItem.get(position).getRating();
         String vicinity = locationItem.get(position).getVicinity();
         boolean openStatus = locationItem.get(position).getOpenStatus();
         //Set Image
         holder.subImage.setImageResource(imageId);
         holder.name.setText(name);
-        holder.rating.setRating(rating);
+        holder.rating.setRating((float) rating);
         holder.ratingNumber.setText(String.valueOf(rating));
         holder.vicinity.setText(vicinity);
         if (openStatus) {

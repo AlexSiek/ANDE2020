@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-
+            Intent i = new Intent(MainActivity.this, RecoPageActivity.class);
+            startActivity(i);
         }else {
             requestLocationPermission();
         }
