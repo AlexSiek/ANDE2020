@@ -60,13 +60,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        Toast.makeText(MainActivity.this, "Recents", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.history:
-                        Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.saved:
-                        Toast.makeText(MainActivity.this, "Saved Locations", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(MainActivity.this, SavedLocationsActivity.class);
                         startActivity(i);
                         break;

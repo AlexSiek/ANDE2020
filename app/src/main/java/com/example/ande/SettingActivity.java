@@ -1,14 +1,23 @@
 package com.example.ande;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -18,6 +27,7 @@ public class SettingActivity extends AppCompatActivity {
     public static final String MyPREFERNCES = "userPref";
     public static final String ULocation = "locationPref";
     public static final String UNotification = "notificationPref";
+    private static final int NOTIFICATION_REMINDER = 1;
     SharedPreferences prefs;
     SeekBar locationSeekBar;
     Switch notificationSwitch;
@@ -38,7 +48,7 @@ public class SettingActivity extends AppCompatActivity {
         // Loading preferences
         prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
         int gLocation = prefs.getInt(ULocation,50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
-        boolean gNotification = prefs.getBoolean(UNotification,false);
+        boolean gNotification = prefs.getBoolean(UNotification,true);
 
         // Set loaded last set preferences
         String textValue = "";
@@ -76,11 +86,33 @@ public class SettingActivity extends AppCompatActivity {
                 editor.commit();
             }
         });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        Intent i = new Intent(SettingActivity.this, MainActivity.class);
+                        startActivity(i);
+                        break;
+                    case R.id.history:
+                        break;
+                    case R.id.saved:
+                        Intent e = new Intent(SettingActivity.this, SavedLocationsActivity.class);
+                        startActivity(e);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     public void onCheck(View v) {
         switch(v.getId()) {
             case R.id.notificationSwitch:
+                settingNotification(notificationSwitch.isChecked());
                 SharedPreferences.Editor editor = prefs.edit();
                 String onOrOff = "off";
                 if(notificationSwitch.isChecked()){
@@ -104,4 +136,19 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
+    public void settingNotification(boolean switchedOn){
+        //Creating a receiver intent
+        Intent notifyIntent = new Intent(this,NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_REMINDER, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //Alarm are services using the phone's system alarm
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        if(switchedOn){
+            //RTC_WAKEUP wakes up the device when it is off
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  1000 * 60 * 60 * 12,1000 * 60 * 60 * 24, pendingIntent);
+            Log.d("Alarm","ON");
+        }else {
+            alarmManager.cancel(pendingIntent);
+            Log.d("Alarm","OFF");
+        }
+    }
 }

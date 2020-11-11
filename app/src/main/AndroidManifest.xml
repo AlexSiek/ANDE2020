@@ -16,7 +16,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,8 +26,16 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".SettingActivity">
-
         </activity>
+        <service
+        android:name=".NotificationService"
+        android:exported="false" >
+        </service>
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
     </application>
 
 </manifest>
