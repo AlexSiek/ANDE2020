@@ -22,7 +22,6 @@ public class SavedLocationsActivity extends AppCompatActivity {
         //RecyclerView
         bindItemData();
         setUIRef();
-        subRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     private void setUIRef()
@@ -51,6 +50,7 @@ public class SavedLocationsActivity extends AppCompatActivity {
 
     private void bindItemData()
     {
+        locationItem.add(new SubRecycleritem(R.drawable.overeasy,"OverEasy", 3, "In One Fullerton", true));
         locationItem.add(new SubRecycleritem(R.drawable.overeasy,"OverEasy", 3, "In One Fullerton", true));
     }
 }
