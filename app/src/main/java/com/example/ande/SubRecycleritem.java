@@ -4,11 +4,11 @@ public class SubRecycleritem {
 
     private int image;
     private String name;
-    private float rating;
+    private double rating;
     private String vicinity;
     private boolean openStatus;
 
-    public SubRecycleritem(int image, String name, float rating, String vicinity, boolean openStatus) {
+    public SubRecycleritem(int image, String name, double rating, String vicinity, boolean openStatus) {
         this.image = image;
         this.name = name;
         this.rating = rating;
@@ -20,7 +20,7 @@ public class SubRecycleritem {
 
         public String getName() { return this.name; }
 
-        public float getRating() { return this.rating; }
+        public double getRating() { return this.rating; }
 
         public String getVicinity() { return this.vicinity; }
 
