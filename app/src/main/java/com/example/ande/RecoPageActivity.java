@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 
 
+
 public class RecoPageActivity extends AppCompatActivity implements LocationListener{
     //Fetch API
     private RequestQueue requestQueue;
@@ -99,7 +100,7 @@ public class RecoPageActivity extends AppCompatActivity implements LocationListe
 
 
     private void jsonParseReco(){
-        String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius=1500&type=restaurant&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+        String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=1.352480,103.944611&radius=1500&type=restaurant&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
         JsonObjectRequest objectRequest=new JsonObjectRequest(
                 Request.Method.GET,
                 URL,
@@ -124,7 +125,7 @@ public class RecoPageActivity extends AppCompatActivity implements LocationListe
                                     rating = results.getDouble("rating");;
                                 }
 
-                                locationItem.add(new SubRecycleritem(R.drawable.overeasy,name, rating, vicinity, open_now));
+                                locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,name, rating, vicinity, open_now));
                             }
                             //Reference of RecyclerView
                             subRecyclerView = findViewById(R.id.recoLocationItems);

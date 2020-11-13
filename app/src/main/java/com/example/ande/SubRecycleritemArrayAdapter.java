@@ -1,5 +1,6 @@
 package com.example.ande;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -61,6 +60,7 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
             holder.openStatus.setText("Open");
         } else {
             holder.openStatus.setText("Closed");
+            holder.openStatus.setTextColor(Color.parseColor("#FF0000"));
         }
     }
 
