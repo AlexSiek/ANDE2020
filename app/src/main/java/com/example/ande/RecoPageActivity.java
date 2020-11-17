@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +49,8 @@ public class RecoPageActivity extends AppCompatActivity implements LocationListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recopage_activity);
+
+
         //GET location
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -133,7 +135,6 @@ public class RecoPageActivity extends AppCompatActivity implements LocationListe
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RecoPageActivity.this, RecyclerView.VERTICAL, false);
                             //Set Layout Manager to RecyclerView
                             subRecyclerView.setLayoutManager(linearLayoutManager);
-
                             //Create adapter
                             SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
                             {
