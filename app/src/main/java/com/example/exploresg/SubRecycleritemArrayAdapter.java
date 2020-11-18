@@ -1,4 +1,4 @@
-package com.example.ande;
+package com.example.exploresg;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;

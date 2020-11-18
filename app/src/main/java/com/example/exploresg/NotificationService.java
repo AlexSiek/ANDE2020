@@ -1,4 +1,4 @@
-package com.example.ande;
+package com.example.exploresg;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -6,9 +6,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.util.Log;
-
-import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationService extends IntentService {
 

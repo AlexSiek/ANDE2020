@@ -1,4 +1,4 @@
-package com.example.ande;
+package com.example.exploresg;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

@@ -1,4 +1,4 @@
-package com.example.ande;
+package com.example.exploresg;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -144,7 +144,7 @@ public class SettingActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         if(switchedOn){
             //RTC_WAKEUP wakes up the device when it is off
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  1000 * 60 * 60 * 12,1000 * 60 * 60 * 24, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  1000 * 60 * 60 * 15,1000 * 60 * 60 * 24, pendingIntent);
             Log.d("Alarm","ON");
         }else {
             alarmManager.cancel(pendingIntent);

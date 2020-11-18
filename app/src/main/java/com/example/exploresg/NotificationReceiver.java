@@ -1,4 +1,4 @@
-package com.example.ande;
+package com.example.exploresg;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
