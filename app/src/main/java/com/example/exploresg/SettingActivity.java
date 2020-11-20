@@ -21,8 +21,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingActivity extends AppCompatActivity {
 
-    public static final boolean wantNotification = false;
-    public static final int location = 50;
+    public static boolean wantNotification = false;
+    public static int location = 50;
 
     public static final String MyPREFERNCES = "userPref";
     public static final String ULocation = "locationPref";
@@ -133,7 +133,6 @@ public class SettingActivity extends AppCompatActivity {
         editor.putInt(ULocation,gLocation);
         editor.putBoolean(UNotification,notificationSwitch.isChecked());
         editor.commit();
-
     }
 
     public void settingNotification(boolean switchedOn){
