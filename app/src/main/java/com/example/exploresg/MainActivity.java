@@ -75,14 +75,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.setting_item:
                 // do your code
-                Intent intent = new Intent(this, SettingActivity.class);
+                intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.about_item:
                 // do your code
+                intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.database_test:
                 // do your code
