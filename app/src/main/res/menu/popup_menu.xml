@@ -6,4 +6,6 @@
         android:title="Setting" />
     <item android:id="@+id/about_item"
         android:title="About" />
+    <item android:id="@+id/database_test"
+        android:title="Database Test" />
 </menu>

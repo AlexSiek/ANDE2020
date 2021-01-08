@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.about_item:
                 // do your code
                 return true;
+            case R.id.database_test:
+                // do your code
+                Intent intent2 = new Intent(this, databaseTestActivity.class);
+                startActivity(intent2);
+                return true;
             default:
                 return false;
         }
