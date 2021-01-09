@@ -59,6 +59,7 @@ public class RecoDetailActivity extends AppCompatActivity {
         reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
         reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
         reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
+        reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
     }
 
     private void setRecoDetailData() {
