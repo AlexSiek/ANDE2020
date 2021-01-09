@@ -1,22 +1,27 @@
 package com.example.exploresg;
 
-public class SubRecycleritem {
+import android.content.Context;
 
-    private int image;
+public class SubRecycleritem  {
+
+    private String ImgUrl;
     private String name;
     private double rating;
     private String vicinity;
     private boolean openStatus;
+    private Context context;
 
-    public SubRecycleritem(int image, String name, double rating, String vicinity, boolean openStatus) {
-        this.image = image;
+    public SubRecycleritem(String ImgUrl, String name, double rating, String vicinity, boolean openStatus, Context context) {
+        this.ImgUrl = ImgUrl;
         this.name = name;
         this.rating = rating;
         this.vicinity = vicinity;
         this.openStatus = openStatus;
+        this.context = context;
+
     }
 
-        public int getImage() { return this.image; }
+        public String getImageUrl() { return this.ImgUrl; }
 
         public String getName() { return this.name; }
 
@@ -25,4 +30,7 @@ public class SubRecycleritem {
         public String getVicinity() { return this.vicinity; }
 
         public boolean getOpenStatus() { return this.openStatus; }
+
+        public Context getContext() { return this.context; }
+
 }

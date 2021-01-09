@@ -74,11 +74,11 @@ public class SavedLocationsActivity extends AppCompatActivity {
 
     private void bindItemData()
     {
-        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"OverEasy", 4.3, "In One Fullerton", true));
-        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
-        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
-        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
-        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
+//        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"OverEasy", 4.3, "In One Fullerton", true));
+//        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
+//        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
+//        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
+//        locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,"teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false));
 
     }
 }

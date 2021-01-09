@@ -1,5 +1,6 @@
 package com.example.exploresg;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycleritemArrayAdapter.MyViewHolder> {
 
     private ArrayList<SubRecycleritem> locationItem;
+
     private MyRecyclerViewItemClickListener mItemClickListener;
     public SubRecycleritemArrayAdapter(ArrayList<SubRecycleritem> locationItem, MyRecyclerViewItemClickListener itemClickListener) {
         this.locationItem = locationItem;
@@ -45,13 +50,18 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        int imageId = locationItem.get(position).getImage();
+        String imgUrl = locationItem.get(position).getImageUrl();
         String name = locationItem.get(position).getName();
         double rating = locationItem.get(position).getRating();
         String vicinity = locationItem.get(position).getVicinity();
         boolean openStatus = locationItem.get(position).getOpenStatus();
+        Context context = locationItem.get(position).getContext();
         //Set Image
-        holder.subImage.setImageResource(imageId);
+        //holder.subImage.setImageResource(imageId);
+        Glide.with(context)
+                .load(imgUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.subImage);
         holder.name.setText(name);
         holder.rating.setRating((float) rating);
         holder.ratingNumber.setText(String.valueOf(rating));
@@ -97,6 +107,7 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
             vicinity = itemView.findViewById(R.id.vicinity);
             openStatus = itemView.findViewById(R.id.openStatus);
         }
+
     }
 
     //RecyclerView Click Listener

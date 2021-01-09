@@ -2,6 +2,9 @@ package com.example.exploresg;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,77 +36,92 @@ import java.util.ArrayList;
 
 
 
-public class RecoPageActivity extends AppCompatActivity implements LocationListener{
+public class RecoPageActivity extends AppCompatActivity{
     //Fetch API
     private RequestQueue requestQueue;
     //Recycler items
     private RecyclerView subRecyclerView;
     private ArrayList<SubRecycleritem> locationItem = new ArrayList<>();
-    //get location
-    private FusedLocationProviderClient client;
-    private double latitude = 0;
-    private double longitude = 0;
-
-    LocationManager locationManager;
+    //Location Settings
+    private static final int REQUEST_CODE_PERMISSION = 2;
+    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+    // LocationTracker class
+    LocationTracker gps;
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recopage_activity);
-
-
-        //GET location
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            getLocation();
-
-        }else {
-
-        }
-
+        getLocation();
     }
 
-    @SuppressLint("MissingPermission")
-    private void getLocation() {
-
+    private void getLocation(){
         try {
-            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5, RecoPageActivity.this);
+            // LOCATION PERMISSION
 
-        }catch (Exception e){
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    // create class object
+                    gps = new LocationTracker(RecoPageActivity.this);
+
+                    // check if GPS enabled
+                    if (gps.canGetLocation()) {
+
+                        latitude = gps.getLatitude();
+                        longitude = gps.getLongitude();
+
+                        // \n is for new line
+                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
+                                + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                        requestQueue= Volley.newRequestQueue(this);
+
+                        jsonParseReco();
+                    } else {
+                        // can't get location
+                        // GPS or Network is not enabled
+                        // Ask user to enable GPS/network in settings
+                        gps.showSettingsAlert();
+                    }
+                } else {
+                    requestLocationPermission();
+                }
+
+        } catch (Exception e) {
             e.printStackTrace();
-            Log.e("loc", e.toString());
         }
-
-    }
-    public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        Toast.makeText(this, ""+location.getLatitude()+","+location.getLongitude(), Toast.LENGTH_SHORT).show();
-        //API
-        requestQueue= Volley.newRequestQueue(this);
-        //Parse to RecyclerView
-        jsonParseReco();
-    }
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
-    @Override
-    public void onProviderEnabled(String provider) {
-
+    private void requestLocationPermission() {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("Location is needed to explore places!")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(RecoPageActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_PERMISSION);
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //if permission is denied
+                            dialog.dismiss();
+                            Intent i = new Intent(RecoPageActivity.this, MainActivity.class);
+                            startActivity(i);
+                        }
+                    })
+                    .create().show();
+        }else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_PERMISSION);
+        }
     }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
 
     private void jsonParseReco(){
-        String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=1.352480,103.944611&radius=1500&type=restaurant&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+        String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius=1500&type=restaurant&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
         JsonObjectRequest objectRequest=new JsonObjectRequest(
                 Request.Method.GET,
                 URL,
@@ -120,14 +139,22 @@ public class RecoPageActivity extends AppCompatActivity implements LocationListe
                                 String vicinity = results.getString("vicinity");
                                 boolean open_now = false;
                                 Double rating = 0.0;
-                                if(results.has("open_now")){
-                                    open_now = results.getBoolean("open_now");;
+                                String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+                                String photo_ref = "";
+                                if(results.has("opening_hours")){
+                                    JSONObject opening_hours = results.getJSONObject("opening_hours");
+                                    open_now = opening_hours.getBoolean("open_now");
+                                }
+                                if(results.has("photos")) {
+                                    JSONArray photosArr = results.getJSONArray("photos");
+                                    JSONObject PhotoResults = photosArr.getJSONObject(0);
+                                    photo_ref = PhotoResults.getString("photo_reference");
+                                    ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference="+photo_ref+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
                                 }
                                 if(results.has("rating")){
                                     rating = results.getDouble("rating");;
                                 }
-
-                                locationItem.add(new SubRecycleritem(R.drawable.test_overeasy,name, rating, vicinity, open_now));
+                                locationItem.add(new SubRecycleritem(ImgUrl,name, rating, vicinity, open_now,RecoPageActivity.this));
                             }
                             //Reference of RecyclerView
                             subRecyclerView = findViewById(R.id.recoLocationItems);
