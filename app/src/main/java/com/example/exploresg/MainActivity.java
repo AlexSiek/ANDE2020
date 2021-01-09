@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     //RecyclerView
     private RecyclerView mRecyclerView;
     private ArrayList<MainRecycleritem> imageCategories = new ArrayList<>();
+    private static final int REQUEST_CODE_PERMISSION = 2;
 
 
     @Override
@@ -111,9 +114,37 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onItemClicked(MainRecycleritem category)
             {
-                Intent i = new Intent(MainActivity.this, RecoPageActivity.class);
-                startActivity(i);
-                Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
+
+                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    // create class object
+                    LocationTracker gps = new LocationTracker(MainActivity.this);
+                    double latitude;
+                    double longitude;
+                    RequestQueue requestQueue;
+
+                    // check if GPS enabled
+                    if (gps.canGetLocation()) {
+
+                        latitude = gps.getLatitude();
+                        longitude = gps.getLongitude();
+
+                        // \n is for new line
+                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
+                                + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                        requestQueue= Volley.newRequestQueue(MainActivity.this);
+                        //intent
+                        Intent i = new Intent(MainActivity.this, RecoPageActivity.class);
+                        startActivity(i);
+                        Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        gps.showSettingsAlert();
+                    }
+                }else {
+                    requestLocationPermission();
+                }
+
             }
         });
 
@@ -141,33 +172,33 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 //        }
 //    }
 //
-//    private void requestLocationPermission() {
-//        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-//            new AlertDialog.Builder(this)
-//                    .setTitle("Permission needed")
-//                    .setMessage("Location is needed to explore places!")
-//                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_PERMISSION_CODE);
-//                        }
-//                    })
-//                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            //if permission is denied
-//                            dialog.dismiss();
-//                        }
-//                    })
-//                    .create().show();
-//        }else{
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},LOCATION_PERMISSION_CODE);
-//        }
-//    }
+    private void requestLocationPermission() {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("Location is needed to explore places!")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_PERMISSION);
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //if permission is denied
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        }else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_PERMISSION);
+        }
+    }
 
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if(requestCode == LOCATION_PERMISSION_CODE) {
+//        if(requestCode == REQUEST_CODE_PERMISSION) {
 //            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
 //                Toast.makeText(MainActivity.this, "location permission GRANTED", Toast.LENGTH_SHORT).show();
 //            }else{

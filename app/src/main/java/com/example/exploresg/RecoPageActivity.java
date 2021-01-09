@@ -60,7 +60,9 @@ public class RecoPageActivity extends AppCompatActivity{
 
                         latitude = gps.getLatitude();
                         longitude = gps.getLongitude();
-
+                        if(latitude == 0){
+                            LocationError();
+                        }
                         // \n is for new line
                         Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
                                 + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
@@ -182,5 +184,18 @@ public class RecoPageActivity extends AppCompatActivity{
         );
         requestQueue.add(objectRequest);
 
+    }
+    private void LocationError(){
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage("There is a problem getting your location. Please try again.")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(RecoPageActivity.this, MainActivity.class);
+                        startActivity(i);
+                    }
+                })
+                .create().show();
     }
 }
