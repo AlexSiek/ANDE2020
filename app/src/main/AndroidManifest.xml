@@ -38,6 +38,9 @@
         <activity android:name="com.example.exploresg.databaseTestActivity">
 
         </activity>
+        <activity android:name="com.example.exploresg.RecoDetailActivity">
+
+        </activity>
         <service
             android:name="com.example.exploresg.NotificationService"
             android:enabled="false"

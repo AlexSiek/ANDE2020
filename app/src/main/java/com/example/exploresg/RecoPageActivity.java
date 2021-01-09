@@ -2,6 +2,7 @@ package com.example.exploresg;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -143,6 +144,8 @@ public class RecoPageActivity extends AppCompatActivity implements LocationListe
                                 public void onItemClicked(SubRecycleritem locationItem)
                                 {
                                     Toast.makeText(RecoPageActivity.this, locationItem.getName(), Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
+                                    startActivity(i);
                                 }
                             });
 
