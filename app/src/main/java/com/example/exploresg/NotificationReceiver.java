@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.util.Log;
 
 public class NotificationReceiver extends BroadcastReceiver {
-    public NotificationReceiver() {
-    }
+    //
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("NotificationReceiver","Reached this level");
+        Log.d("Notification","NotificationReceiver has been triggered");
         Intent intent1 = new Intent(context, NotificationService.class);
-        context.startService(intent1);
+//        intent1.putExtra() can be used to pass data
+        NotificationService.enqueueWork(context, intent1);
+//        context.startService(intent1);
+        Log.d("Notification","Notification intent has been started");
     }
 }
