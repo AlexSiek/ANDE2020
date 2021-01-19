@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Calendar;
+
 public class SettingActivity extends AppCompatActivity {
 
     public static boolean wantNotification = false;
@@ -136,18 +138,39 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     public void settingNotification(boolean switchedOn){
+        Log.d("Notification","Switch is triggered");
+        switchNotification(switchedOn);
+        if(switchedOn){
+            Log.d("Notification","Alarm has been turned on");
+        }else {
+            Log.d("Notification","Alarm has been turned off");
+        }
+    }
+
+    public void switchNotification(boolean isOn) {// Handle switching on and off of notification
+        //Setting intent time/notification time
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Log.d("Notification","Notification calendar time has been set");
+
         //Creating a receiver intent
         Intent notifyIntent = new Intent(this,NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_REMINDER, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Log.d("Notification","Pending intent has been set");
+
         //Alarm are services using the phone's system alarm
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        if(switchedOn){
-            //RTC_WAKEUP wakes up the device when it is off
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  1000 * 60 * 60 * 15,1000 * 60 * 60 * 24, pendingIntent);
-            Log.d("Alarm","ON");
-        }else {
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        Log.d("Notification","Alarm manager has been set");
+
+        if(isOn){
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+            Log.d("Notification","Alarm has been turn on");
+        }else{
             alarmManager.cancel(pendingIntent);
-            Log.d("Alarm","OFF");
+            Log.d("Notification","Alarm has been turn off");
         }
     }
+
 }

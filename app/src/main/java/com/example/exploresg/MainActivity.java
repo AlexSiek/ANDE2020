@@ -5,11 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
@@ -122,22 +118,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     LocationTracker gps = new LocationTracker(MainActivity.this);
                     double latitude;
                     double longitude;
-                    RequestQueue requestQueue;
-
                     // check if GPS enabled
                     if (gps.canGetLocation()) {
 
-                        latitude = gps.getLatitude();
-                        longitude = gps.getLongitude();
+//                        latitude = gps.getLatitude();
+//                        longitude = gps.getLongitude();
+//
+//                        // \n is for new line
+//                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
+//                                + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
 
-                        // \n is for new line
-                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
-                                + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-                        requestQueue= Volley.newRequestQueue(MainActivity.this);
                         //intent
                         Intent i = new Intent(MainActivity.this, RecoPageActivity.class);
+                        i.putExtra("CATEGORY", category.getCategory());
                         startActivity(i);
-                        Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
                     } else {
                         gps.showSettingsAlert();
                     }
