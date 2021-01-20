@@ -41,6 +41,9 @@
         <activity android:name="com.example.exploresg.RecoDetailActivity">
 
         </activity>
+        <activity android:name="com.example.exploresg.NotificationActivity">
+
+        </activity>
         <service
             android:name="com.example.exploresg.NotificationService"
             android:permission="android.permission.BIND_JOB_SERVICE"
