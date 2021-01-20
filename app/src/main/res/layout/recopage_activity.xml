@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="ExtraText">
 
     <TextView
         android:id="@+id/recoPageText"
@@ -11,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="Here are some locations..."
+        android:text="@string/here_are_some_locations"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,8 +33,27 @@
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/randomBtn"
+        android:layout_width="225dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="56dp"
+        android:background="#33D869"
+        android:backgroundTint="#33D869"
+        android:fontFamily="sans-serif-medium"
+        android:radius="20dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recoLocationItems"
+        app:layout_constraintEnd_toEndOf="@+id/recoLocationItems"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/randomize"
+        android:onClick="OnClick" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

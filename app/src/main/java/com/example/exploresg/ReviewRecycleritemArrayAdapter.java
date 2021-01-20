@@ -1,5 +1,6 @@
 package com.example.exploresg;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.media.Rating;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.w3c.dom.Text;
 
@@ -48,12 +52,16 @@ public class ReviewRecycleritemArrayAdapter extends RecyclerView.Adapter<ReviewR
     @Override
     public void onBindViewHolder(@NonNull ReviewRecycleritemArrayAdapter.MyViewHolder holder, int position) {
 
-        int profilePicture = reviewItem.get(position).getAuthorImage();
+        String profilePicture = reviewItem.get(position).getAuthorImage();
+        Context context = reviewItem.get(position).getContext();
         String authorName = reviewItem.get(position).getAuthorName();
         double rating = reviewItem.get(position).getRating();
         String review = reviewItem.get(position).getReview();
         //Set Image
-        holder.profilePicture.setImageResource(profilePicture);
+        Glide.with(context)
+                .load(profilePicture)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.profilePicture);
         holder.authorName.setText(authorName);
         holder.rating.setRating((float) rating);
         holder.review.setText(review);
