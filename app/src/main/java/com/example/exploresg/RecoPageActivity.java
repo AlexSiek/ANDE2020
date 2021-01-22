@@ -78,6 +78,7 @@ public class RecoPageActivity extends AppCompatActivity{
                         longitude = gps.getLongitude();
                         if(latitude == 0){
                             ErrorPopup("There is a problem getting your location. Please try again.");
+
                         }
                         // \n is for new line
                         Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
@@ -273,7 +274,6 @@ public class RecoPageActivity extends AppCompatActivity{
         //Create adapter
         //Handling clicks
         SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay , locationItemDisplay -> {
-            Log.e("penis",locationItemDisplay.getPlaceId());
             Intent i1 = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
             i1.putExtra("placeID", locationItemDisplay.getPlaceId());
             startActivity(i1);

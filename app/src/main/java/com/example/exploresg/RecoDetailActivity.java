@@ -1,8 +1,10 @@
 package com.example.exploresg;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -35,6 +37,8 @@ public class RecoDetailActivity extends AppCompatActivity {
     private String placeId;
     //Fetch API
     private RequestQueue requestQueue;
+    //Saved Item
+    private ArrayList<SavedItem> savedItem = new ArrayList<>();
 
 
     @Override
@@ -43,6 +47,9 @@ public class RecoDetailActivity extends AppCompatActivity {
         setContentView(R.layout.recodetail_activity);
         Intent intent = getIntent();
         placeId = Objects.requireNonNull(intent.getExtras()).getString("placeID");
+        DatabaseHandler db = new DatabaseHandler(this);
+        if(db.getAllSavedItems() != null)
+            savedItem = db.getAllSavedItems();
 
         //RecyclerView
         requestQueue= Volley.newRequestQueue(this);
@@ -73,7 +80,6 @@ public class RecoDetailActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 JSONObject results = response.getJSONObject("result");
-                                    Log.e("penis2",results.toString());
                                     //Main declaration
                                     String photo_ref;
                                     String name = results.getString("name");
@@ -120,7 +126,7 @@ public class RecoDetailActivity extends AppCompatActivity {
                                 }
 
                             } catch (JSONException e) {
-                                Log.e("penis",e.toString());
+                                e.printStackTrace();
                             }
                             setUIRef();
 
@@ -167,5 +173,30 @@ public class RecoDetailActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
+    public void onClick(View v){
+        DatabaseHandler db = new DatabaseHandler(this);
+        if(db.getAllSavedItems() != null)
+            savedItem = db.getAllSavedItems();
+        
+        if (v.getId() == R.id.saveBtn) {
+            if(savedItem.size() != 0) {
+                Log.e("p","asdf");
+                for (int i = 0; i < savedItem.size(); i++) {
+                    if (savedItem.get(i).getPlaceId().equals(placeId)) {
+                        Toast.makeText(RecoDetailActivity.this, "Location removed", Toast.LENGTH_SHORT).show();
+                        db.removeSavedItemByPlaceId(placeId);
+                        return;
+                    }
+                }
+                        Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
+                        db.addSavedItem(placeId);
+
+            }else{
+                Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
+                db.addSavedItem(placeId);
+            }
+        }
+    }
 
 }

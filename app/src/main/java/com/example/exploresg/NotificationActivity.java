@@ -78,8 +78,8 @@ public class NotificationActivity extends AppCompatActivity {
     {
         TextView distance = findViewById(R.id.distanceText);
         distance.setText("Within 5km");
-        locationItem.add(new SubRecycleritem("https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png","OverEasy", 4.3, "In One Fullerton", true, NotificationActivity.this));
-        locationItem.add(new SubRecycleritem("https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png","teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false, NotificationActivity.this));
+        //locationItem.add(new SubRecycleritem("https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png","OverEasy", 4.3, "In One Fullerton", true, NotificationActivity.this));
+        //locationItem.add(new SubRecycleritem("https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png","teddddddddddddddddddddddddddddst", 4.3, "In One Fulleasdasdasdasdasdasrton", false, NotificationActivity.this));
 
     }
 
