@@ -178,10 +178,9 @@ public class RecoDetailActivity extends AppCompatActivity {
         DatabaseHandler db = new DatabaseHandler(this);
         if(db.getAllSavedItems() != null)
             savedItem = db.getAllSavedItems();
-        
+
         if (v.getId() == R.id.saveBtn) {
-            if(savedItem.size() != 0) {
-                Log.e("p","asdf");
+            if((db.getAllSavedItems() != null)  && savedItem.size() != 0) {
                 for (int i = 0; i < savedItem.size(); i++) {
                     if (savedItem.get(i).getPlaceId().equals(placeId)) {
                         Toast.makeText(RecoDetailActivity.this, "Location removed", Toast.LENGTH_SHORT).show();
