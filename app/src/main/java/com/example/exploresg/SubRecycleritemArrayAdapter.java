@@ -1,11 +1,11 @@
 package com.example.exploresg;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycleritemArrayAdapter.MyViewHolder> {
 
-    private ArrayList<SubRecycleritem> locationItem;
+    private final ArrayList<SubRecycleritem> locationItem;
 
-    private MyRecyclerViewItemClickListener mItemClickListener;
+    private final MyRecyclerViewItemClickListener mItemClickListener;
     public SubRecycleritemArrayAdapter(ArrayList<SubRecycleritem> locationItem, MyRecyclerViewItemClickListener itemClickListener) {
         this.locationItem = locationItem;
         this.mItemClickListener = itemClickListener;
@@ -38,16 +38,12 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
         final MyViewHolder myViewHolder = new MyViewHolder(view);
 
         //Item Clicks
-        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mItemClickListener.onItemClicked(locationItem.get(myViewHolder.getLayoutPosition()));
-            }
-        });
+        myViewHolder.itemView.setOnClickListener(v -> mItemClickListener.onItemClicked(locationItem.get(myViewHolder.getLayoutPosition())));
 
         return myViewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -57,6 +53,7 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
         String vicinity = locationItem.get(position).getVicinity();
         boolean openStatus = locationItem.get(position).getOpenStatus();
         Context context = locationItem.get(position).getContext();
+
         //Set Image
         //holder.subImage.setImageResource(imageId);
         Glide.with(context)
@@ -73,6 +70,7 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
             holder.openStatus.setText("Closed");
             holder.openStatus.setTextColor(Color.parseColor("#FF0000"));
         }
+
     }
 
     @Override
@@ -91,13 +89,13 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
     }
 
     //RecyclerView View Holder
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView subImage;
-        private TextView name;
-        private RatingBar rating;
-        private TextView ratingNumber;
-        private TextView vicinity;
-        private TextView openStatus;
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView subImage;
+        private final TextView name;
+        private final RatingBar rating;
+        private final TextView ratingNumber;
+        private final TextView vicinity;
+        private final TextView openStatus;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);

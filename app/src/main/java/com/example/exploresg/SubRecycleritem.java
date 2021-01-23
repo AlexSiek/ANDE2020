@@ -4,20 +4,24 @@ import android.content.Context;
 
 public class SubRecycleritem  {
 
+
     private String ImgUrl;
     private String name;
     private double rating;
     private String vicinity;
     private boolean openStatus;
     private Context context;
+    private String placeId;
 
-    public SubRecycleritem(String ImgUrl, String name, double rating, String vicinity, boolean openStatus, Context context) {
+    public SubRecycleritem(String ImgUrl, String name, double rating, String vicinity, boolean openStatus, Context context, String placeId) {
+
         this.ImgUrl = ImgUrl;
         this.name = name;
         this.rating = rating;
         this.vicinity = vicinity;
         this.openStatus = openStatus;
         this.context = context;
+        this.placeId = placeId;
 
     }
 
@@ -32,5 +36,7 @@ public class SubRecycleritem  {
         public boolean getOpenStatus() { return this.openStatus; }
 
         public Context getContext() { return this.context; }
+
+        public String getPlaceId() { return this.placeId; }
 
 }

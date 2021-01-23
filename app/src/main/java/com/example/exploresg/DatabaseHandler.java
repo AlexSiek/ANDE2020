@@ -133,7 +133,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 null );
         Log.d("Database","Retrieved SavedItems");
 
-        if(cursor != null){
+        if(cursor.getCount() != 0 ){
 
             cursor.moveToFirst();
             do{
