@@ -161,15 +161,7 @@ public class RecoDetailActivity extends AppCompatActivity {
         //Set adapter to RecyclerView
         reviewRecyclerView.setAdapter(myRecyclerViewAdapter);
     }
-<<<<<<< HEAD
 
-    private void bindItemData()
-    {
-        reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
-        reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
-        reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
-        reviewItem.add(new Reviewitem(R.drawable.test_profile, "Tester", 5, "Very good food"));
-=======
     private void ErrorPopup(String message){
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Error")
@@ -179,7 +171,6 @@ public class RecoDetailActivity extends AppCompatActivity {
                     startActivity(i);
                 })
                 .create().show();
->>>>>>> origin/master
     }
 
 
