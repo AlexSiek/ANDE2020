@@ -62,8 +62,6 @@ public class SavedLocationsActivity extends AppCompatActivity {
                     case R.id.history:
                         break;
                     case R.id.saved:
-                        Intent i = new Intent(SavedLocationsActivity.this, SavedLocationsActivity.class);
-                        startActivity(i);
                         break;
                 }
                 return true;

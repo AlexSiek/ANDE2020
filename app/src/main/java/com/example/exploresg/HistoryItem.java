@@ -3,28 +3,38 @@ package com.example.exploresg;
 public class HistoryItem {
     public String placeId, timeStamp;
     public int itemId;
+    public SubRecycleritem subRecycleritem;
 
     public HistoryItem(){
 
     }
 
-    public HistoryItem(int itemId,String placeId,String timestamp){
+    public HistoryItem(int itemId, String placeId, String timestamp){
         this.itemId = itemId;
         this.placeId = placeId;
         this.timeStamp = timestamp;
     }
 
+    public HistoryItem(int itemId, String placeId, String timestamp, SubRecycleritem subRecycleritem){
+        this.itemId = itemId;
+        this.placeId = placeId;
+        this.timeStamp = timestamp;
+        this.subRecycleritem = subRecycleritem;
+    }
+
     public int getItemId() {
-        return itemId;
+        return this.itemId;
     }
 
     public String getPlaceId() {
-        return placeId;
+        return this.placeId;
     }
 
     public String getTimeStamp() {
-        return timeStamp;
+        return this.timeStamp;
     }
+
+    public SubRecycleritem getSubRecycleritem() { return this.subRecycleritem; }
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
@@ -37,4 +47,6 @@ public class HistoryItem {
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
+
+    public void setSubRecycleritem(SubRecycleritem subRecycleritem) { this.subRecycleritem = subRecycleritem; }
 }
