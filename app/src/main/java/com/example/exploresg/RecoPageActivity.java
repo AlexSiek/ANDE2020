@@ -228,7 +228,11 @@ public class RecoPageActivity extends AppCompatActivity{
 
                                     }
                                 }
-                                renderView();
+                                try {
+                                    renderView();
+                                }catch(Exception e){
+                                    ErrorPopup("An error has occurred. Please try again.");
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -255,41 +259,42 @@ public class RecoPageActivity extends AppCompatActivity{
 
 
     @SuppressLint("NonConstantResourceId")
-    public void OnClick(View v){
+    public void OnClick(View v) {
         if (v.getId() == R.id.randomBtn) {
             renderView();
         }
     }
 
-    private void renderView(){
+    private void renderView() {
         locationItemDisplay.clear();
+        if (locationItem.size() != 0) {
+            for (int i = 0; i < 5; i++) {
+                locationItemDisplay.add(locationItem.get(i));
+            }
+            //Shuffle list
+            Collections.shuffle(locationItem);
+            locationItemDisplay.clear();
+            for (int i = 0; i < 5; i++) {
+                locationItemDisplay.add(locationItem.get(i));
+            }
 
-        for (int i = 0; i < 5; i++) {
-            locationItemDisplay.add(locationItem.get(i));
+            //Reference of RecyclerView
+            subRecyclerView = findViewById(R.id.recoLocationItems);
+            //Linear Layout Manager
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RecoPageActivity.this, RecyclerView.VERTICAL, false);
+            //Set Layout Manager to RecyclerView
+            subRecyclerView.setLayoutManager(linearLayoutManager);
+            //Create adapter
+            //Handling clicks
+            SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay, locationItemDisplay -> {
+                Intent i1 = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
+                i1.putExtra("placeID", locationItemDisplay.getPlaceId());
+                startActivity(i1);
+            });
+
+            //Set adapter to RecyclerView
+            subRecyclerView.setAdapter(myRecyclerViewAdapter);
+            myRecyclerViewAdapter.notifyItemInserted(1);
         }
-        //Shuffle list
-        Collections.shuffle(locationItem);
-        locationItemDisplay.clear();
-        for (int i = 0; i < 5; i++) {
-            locationItemDisplay.add(locationItem.get(i));
-        }
-
-        //Reference of RecyclerView
-        subRecyclerView = findViewById(R.id.recoLocationItems);
-        //Linear Layout Manager
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RecoPageActivity.this, RecyclerView.VERTICAL, false);
-        //Set Layout Manager to RecyclerView
-        subRecyclerView.setLayoutManager(linearLayoutManager);
-        //Create adapter
-        //Handling clicks
-        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay , locationItemDisplay -> {
-            Intent i1 = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
-            i1.putExtra("placeID", locationItemDisplay.getPlaceId());
-            startActivity(i1);
-        });
-
-        //Set adapter to RecyclerView
-        subRecyclerView.setAdapter(myRecyclerViewAdapter);
-        myRecyclerViewAdapter.notifyItemInserted(1);
     }
 }

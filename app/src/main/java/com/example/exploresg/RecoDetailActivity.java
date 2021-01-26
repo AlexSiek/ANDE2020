@@ -2,6 +2,7 @@ package com.example.exploresg;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,7 @@ public class RecoDetailActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     //Saved Item
     private ArrayList<SavedItem> savedItem = new ArrayList<>();
-
+    private String locationUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class RecoDetailActivity extends AppCompatActivity {
 
             JsonObjectRequest objectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeId+"&fields=photos,name,rating,formatted_address,reviews&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
+                    "https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeId+"&fields=photos,name,rating,formatted_address,reviews,url&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -85,8 +86,9 @@ public class RecoDetailActivity extends AppCompatActivity {
                                     String name = results.getString("name");
                                     double rating = 0.0;
                                     String ratingText = "";
-                                    String vicinity = results.getString("formatted_address");
+                                    String vicinity = results.getString("formatted_address").replace(", ", "\n");
                                     String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+                                    locationUrl = results.getString("url");
                                     if (results.has("photos")) {
                                         JSONArray photosArr = results.getJSONArray("photos");
                                         JSONObject PhotoResults = photosArr.getJSONObject(0);
@@ -177,25 +179,36 @@ public class RecoDetailActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     public void onClick(View v){
         DatabaseHandler db = new DatabaseHandler(this);
-        if(db.getAllSavedItems() != null)
-            savedItem = db.getAllSavedItems();
+        ImageView btn = findViewById(R.id.saveBtn);
+        switch (v.getId()) {
+            case R.id.saveBtn:
+                if(db.getAllSavedItems() != null)
+                    savedItem = db.getAllSavedItems();
 
-        if (v.getId() == R.id.saveBtn) {
-            if((db.getAllSavedItems() != null)  && savedItem.size() != 0) {
-                for (int i = 0; i < savedItem.size(); i++) {
-                    if (savedItem.get(i).getPlaceId().equals(placeId)) {
-                        Toast.makeText(RecoDetailActivity.this, "Location removed", Toast.LENGTH_SHORT).show();
-                        db.removeSavedItemByPlaceId(placeId);
-                        return;
-                    }
-                }
+                if (v.getId() == R.id.saveBtn) {
+                    if((db.getAllSavedItems() != null)  && savedItem.size() != 0) {
+                        for (int i = 0; i < savedItem.size(); i++) {
+                            if (savedItem.get(i).getPlaceId().equals(placeId)) {
+                                Toast.makeText(RecoDetailActivity.this, "Location removed", Toast.LENGTH_SHORT).show();
+                                btn.setImageResource(R.drawable.bookmark_border_purple_24px);
+                                db.removeSavedItemByPlaceId(placeId);
+                                return;
+                            }
+                        }
                         Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
+                        btn.setImageResource(R.drawable.bookmark_purple_24px);
                         db.addSavedItem(placeId);
 
-            }else{
-                Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
-                db.addSavedItem(placeId);
-            }
+                    }else{
+                        Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
+                        db.addSavedItem(placeId);
+                    }
+                }
+                break;
+            case R.id.googlemaps:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(locationUrl));
+                startActivity(browserIntent);
+                break;
         }
     }
 
