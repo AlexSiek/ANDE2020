@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:text="Here are some random locations..."
+        android:text="@string/notification_header"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="1dp"
-        android:text="Distance"
+        android:text="@string/notification_subheader"
         android:textColor="#007CAD"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"

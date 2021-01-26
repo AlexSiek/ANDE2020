@@ -4,6 +4,21 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/history_header"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    // For button text, @string names are:
+    // @string/history_clearAll
+    // @string/history_clear
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locationItems"
         android:layout_width="match_parent"

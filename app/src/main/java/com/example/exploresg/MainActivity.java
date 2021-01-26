@@ -56,13 +56,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
                 switch (item.getItemId()) {
                     case R.id.home:
+//                        i = new Intent(MainActivity.this, HistoryActivity.class);
+//                        startActivity(i);
                         break;
                     case R.id.history:
+                        i = new Intent(MainActivity.this, HistoryActivity.class);
+                        startActivity(i);
                         break;
                     case R.id.saved:
-                        Intent i = new Intent(MainActivity.this, SavedLocationsActivity.class);
+                        i = new Intent(MainActivity.this, SavedLocationsActivity.class);
                         startActivity(i);
                         break;
                 }

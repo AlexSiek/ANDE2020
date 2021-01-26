@@ -22,7 +22,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="44dp"
-        android:text="Take The Time, Explore Singapore"
+        android:text="@string/tagline"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

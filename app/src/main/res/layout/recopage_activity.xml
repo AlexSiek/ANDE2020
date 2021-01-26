@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="@string/here_are_some_locations"
+        android:text="@string/recopage_header"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/recoLocationItems"
         app:layout_constraintEnd_toEndOf="@+id/recoLocationItems"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/randomize"
+        android:text="@string/recopage_randomize"
         android:onClick="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

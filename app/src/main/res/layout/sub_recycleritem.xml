@@ -18,7 +18,7 @@
         android:maxLines="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/test_string"
         android:textSize="20dp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="169dp"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@color/red"
-        android:text="TextView"
+        android:text="@string/test_string"
         android:layout_below="@id/locationName"/>
 
     <RatingBar
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:maxLines="2"
-        android:text="TextView"
+        android:text="@string/test_string"
         android:layout_below="@id/rating"/>
 
     <TextView
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/green"
-        android:text="TextView"
+        android:text="@string/test_string"
         android:layout_below="@id/vicinity"/>
 
     <ImageView

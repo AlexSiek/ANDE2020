@@ -1,5 +1,47 @@
 <resources>
     <string name="app_name">ExploreSG</string>
-    <string name="here_are_some_locations">Here are some locations...</string>
-    <string name="randomize">Randomize</string>
+    <string name="test_string">TextView</string>
+
+    <!--    Splash Screen Activity-->
+    <string name="tagline">Take The Time, Explore Singapore</string>
+
+    <!--    Activity Main-->
+    <string name="main_header">What would you like to explore?</string>
+
+    <!--    Reco Page Activity-->
+    <string name="recopage_header">Here are some locations...</string>
+    <string name="recopage_randomize">Randomize</string>
+
+    <!--    About Activity-->
+    <string name="about_header">About Us</string>
+    <string name="subheader_1">What is this app?</string>
+    <string name="subtext_1">ExploreSG is an application developed to help people in Singapore to discover new places to visit and explore.</string>
+    <string name="subheader_2">How does this app work?</string>
+    <string name="subtext_2">We use Google maps and it\'s APIs to find locations around Singapore, then randomize these spots to provide new places to explore everytime.</string>
+    <string name="subheader_3">Who are the creators?</string>
+    <string name="subtext_3">We are a group of students from Singapore Polytechnic\'s (DIT) developing this application as part of our module on Android Development.</string>
+    <string name="developer1">Khye Lerk</string>
+    <string name="developer2">Alex Siek</string>
+    <string name="developer3">Reagan Lai</string>
+
+    <!--    History Activity-->
+    <string name="history_header">History</string>
+    <string name="history_clearAll">Clear All</string>
+    <string name="history_clear">Clear</string>
+
+    <!--    Saved Locations Activity-->
+    <string name="saved_header">Saved Locations</string>
+
+    <!--    Notification Activity-->
+    <string name="notification_header">Here are some locations...</string>
+    <string name="notification_subheader">Distance</string>
+
+    <!--    Setting Activity-->
+    <string name="setting_header">Setting</string>
+    <string name="setting_subheader_1">Notification</string>
+    <string name="setting_subtext_1">Receive daily random locations</string>
+    <string name="setting_subheader_2">Location</string>
+    <string name="setting_subtext_2">Range of search from your location</string>
+    <string name="setting_seekbar_text">*Limiting range might impede searches in certain locations</string>
+    <string name="setting_seekbar_option_1">Entire Singapore</string>
 </resources>

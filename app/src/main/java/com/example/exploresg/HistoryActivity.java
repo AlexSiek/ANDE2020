@@ -32,7 +32,7 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.savedlocations_activity);
+        setContentView(R.layout.history_activity);
         requestQueue= Volley.newRequestQueue(this);
 
         //load saved items from DB
