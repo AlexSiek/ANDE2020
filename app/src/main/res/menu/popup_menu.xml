@@ -3,9 +3,9 @@
     android:layout_height="200px"
     android:layout_width="200px">
     <item android:id="@+id/setting_item"
-        android:title="Setting" />
+        android:title="@string/popup_option_1" />
     <item android:id="@+id/about_item"
-        android:title="About" />
+        android:title="@string/popup_option_2" />
     <item android:id="@+id/database_test"
-        android:title="Database Test" />
+        android:title="@string/popup_option_3" />
 </menu>

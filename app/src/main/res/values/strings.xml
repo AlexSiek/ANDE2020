@@ -5,6 +5,11 @@
     <!--    Splash Screen Activity-->
     <string name="tagline">Take The Time, Explore Singapore</string>
 
+    <!--    Popup Menu-->
+    <string name="popup_option_1">Setting</string>
+    <string name="popup_option_2">About</string>
+    <string name="popup_option_3">Database Test</string>
+
     <!--    Activity Main-->
     <string name="main_header">What would you like to explore?</string>
 

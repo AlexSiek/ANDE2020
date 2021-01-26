@@ -7,12 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background">#FFFFFF </color>
+    <color name="background">#FFFFFF</color>
     <color name="switchOnColor" android:state_checked="true">#00966B</color>
     <color name="seekbarColor">#00966B</color>
     <color name="ratingbarColorFilled">#FFD600</color>
     <color name="ratingbarColorUnfilled">#C9C9C9</color>
     <color name="red">#FF0000</color>
     <color name="green">#269201</color>
-
+    <color name="lightblue">#007CAD</color>
+    <color name="grey">#656565</color>
+    <color name="light_grey">#F0F0F0</color>
+    <color name="purpleblue">#323781</color>
 </resources>

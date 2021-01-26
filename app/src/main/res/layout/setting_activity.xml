@@ -47,7 +47,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:text="@string/setting_subtext_1"
-        android:textColor="#656565"
+        android:textColor="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notificationText" />
 
@@ -58,7 +58,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="4dp"
         android:text="@string/setting_subtext_2"
-        android:textColor="#656565"
+        android:textColor="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationText" />
 
@@ -73,7 +73,7 @@
         android:paddingRight="0dp"
         android:maxLines="2"
         android:text="@string/setting_seekbar_text"
-        android:textColor="#656565"
+        android:textColor="@color/grey"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -115,7 +115,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="36dp"
         android:text="@string/setting_seekbar_option_1"
-        android:textColor="#656565"
+        android:textColor="@color/grey"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationSeekBar" />

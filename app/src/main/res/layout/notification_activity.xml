@@ -57,7 +57,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="1dp"
         android:text="@string/notification_subheader"
-        android:textColor="#007CAD"
+        android:textColor="@color/lightblue"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
