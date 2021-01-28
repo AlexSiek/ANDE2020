@@ -60,6 +60,7 @@ public class RecoDetailActivity extends AppCompatActivity {
 
 
         // To be called after fetching data - Set Selected Reco Detail Info
+        db.addHistoryItem(placeId);
         setRecoDetailData();
     }
 
