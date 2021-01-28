@@ -32,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
+        android:maxLength="30"
         android:text="@string/test_string"
-        android:textStyle="bold"
         android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background" />
 
@@ -43,22 +44,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:maxLines="3"
+        android:maxLines="2"
         android:text="@string/test_string"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingNumber" />
 
     <TextView
         android:id="@+id/ratingNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
         android:layout_weight="1"
+        android:layout_marginStart="16dp"
         android:text="@string/test_string"
         android:textColor="@color/red"
         app:layout_constraintEnd_toStartOf="@+id/rating"
-        app:layout_constraintTop_toTopOf="@+id/background" />
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <RatingBar
         android:id="@+id/rating"
@@ -66,32 +68,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="@+id/locationName"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:numStars="5"
         android:paddingTop="2dp"
         android:paddingRight="2dp"
         android:stepSize="0.1"
         android:theme="@style/customRatingBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/background" />
+        app:layout_constraintStart_toEndOf="@+id/ratingNumber"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <ImageView
         android:id="@+id/saveBtn"
-        android:layout_width="27dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="34dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="20dp"
         android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rating"
+        app:layout_constraintTop_toTopOf="@+id/background"
         app:srcCompat="@drawable/bookmark_border_purple_24px" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="300dp"
         android:clipToPadding="false"
         android:paddingBottom="20dp"
         android:scrollbarSize="5dp"

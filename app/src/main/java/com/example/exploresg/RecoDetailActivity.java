@@ -86,7 +86,11 @@ public class RecoDetailActivity extends AppCompatActivity {
                                     String name = results.getString("name");
                                     double rating = 0.0;
                                     String ratingText = "";
-                                    String vicinity = results.getString("formatted_address").replace(", ", "\n");
+                                    String vicinity = results.getString("formatted_address");
+                                    int lastComma = vicinity.lastIndexOf(",");
+                                    StringBuilder formattedVicinity = new StringBuilder(vicinity);
+                                    formattedVicinity.setCharAt(lastComma+1, '\0');
+                                    formattedVicinity.setCharAt(lastComma, '\n');
                                     String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
                                     locationUrl = results.getString("url");
                                     if (results.has("photos")) {
@@ -106,7 +110,7 @@ public class RecoDetailActivity extends AppCompatActivity {
                                     nameView.setText(name);
                                     ratingView.setRating((float) rating);
                                     ratingNumberView.setText(ratingText);
-                                    vicinityView.setText(vicinity);
+                                    vicinityView.setText(formattedVicinity);
 
                                 //Review declaration
                                 if (results.has("reviews")) {
