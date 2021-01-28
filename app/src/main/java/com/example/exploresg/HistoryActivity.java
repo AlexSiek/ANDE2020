@@ -94,11 +94,12 @@ public class HistoryActivity extends AppCompatActivity {
     private void setHistoryItems() {
         Log.d("History Activity", "Running setHistoryItems()");
         for (int i = 0; i < historyItems.size(); i++) {
-            for (int a = 0; a < historyItems.get(i).size(); i++) {
+            for (int a = 0; a < historyItems.get(i).size(); a++) {
             Log.d("HISTORY ITEM SIZE", String.valueOf(historyItems.get(0).size()));
             int finalI = i;
             Log.d("Fetched History Item from HistoryActivity", historyItems.get(i).get(a).getPlaceId());
-            JsonObjectRequest objectRequest = new JsonObjectRequest(
+                int finalA = a;
+                JsonObjectRequest objectRequest = new JsonObjectRequest(
                     Request.Method.GET,
                     "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + historyItems.get(i).get(a).getPlaceId() + "&fields=photos,name,rating,vicinity,reviews&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
                     null,
@@ -128,7 +129,7 @@ public class HistoryActivity extends AppCompatActivity {
                                     rating = results.getDouble("rating");
                                 }
 
-                                locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, HistoryActivity.this, historyItems.get(finalI).get(a).getPlaceId()));
+                                locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, HistoryActivity.this, historyItems.get(finalI).get(finalA).getPlaceId()));
                                 // Client Side Validation for History Dates
                             } catch (JSONException e) {
                                 e.printStackTrace();
