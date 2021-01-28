@@ -108,7 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_TIMESTAMP + " DESC",
                 null );
         Log.d("Database","Retrieved HistoryItems");
-        if(cursor != null){
+        if(cursor.getCount() != 0 ){
             returnedArray = sortHistoryItemIntoArray(cursor);
             printHistoryResults(returnedArray);
             Log.d("Database","Retrieved Here");

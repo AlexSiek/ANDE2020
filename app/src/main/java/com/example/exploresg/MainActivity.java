@@ -122,23 +122,13 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         == PackageManager.PERMISSION_GRANTED) {
                     // create class object
                     LocationTracker gps = new LocationTracker(MainActivity.this);
-                    double latitude;
-                    double longitude;
+
                     // check if GPS enabled
                     if (gps.canGetLocation()) {
-
-//                        latitude = gps.getLatitude();
-//                        longitude = gps.getLongitude();
-//
-//                        // \n is for new line
-//                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
-//                                + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-
                         //intent
                         Intent i = new Intent(MainActivity.this, RecoPageActivity.class);
                         i.putExtra("CATEGORY", category.getCategory());
                         startActivity(i);
-                       // Toast.makeText(MainActivity.this, category.getCategory(), Toast.LENGTH_SHORT).show();
                     } else {
                         gps.showSettingsAlert();
                     }
@@ -161,18 +151,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         imageCategories.add(new MainRecycleritem(R.drawable.img_adventure,"Adventure"));
 
     }
-    // LOCATION PERMISSION
-//    private void checkReadPermission() {
-//        if (ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            Intent i = new Intent(MainActivity.this, RecoPageActivity.class);
-//            startActivity(i);
-//        }else {
-//            requestLocationPermission();
-//        }
-//    }
-//
+
+    //Loaction Permission
     private void requestLocationPermission() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
             new AlertDialog.Builder(this)
@@ -196,15 +176,4 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_PERMISSION);
         }
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if(requestCode == REQUEST_CODE_PERMISSION) {
-//            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                Toast.makeText(MainActivity.this, "location permission GRANTED", Toast.LENGTH_SHORT).show();
-//            }else{
-//                Toast.makeText(MainActivity.this, "location permission DENIED", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 }
