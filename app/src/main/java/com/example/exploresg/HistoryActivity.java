@@ -2,6 +2,7 @@ package com.example.exploresg;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,8 @@ public class HistoryActivity extends AppCompatActivity {
         DatabaseHandler db = new DatabaseHandler(this);
         if(db.getAllSavedItems() != null)
             historyItems = db.getAllHistoryItems();
+
+        setHistoryItems();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
@@ -88,14 +91,16 @@ public class HistoryActivity extends AppCompatActivity {
         //subRecyclerView.setNestedScrollingEnabled(false);
     }
 
-    private void setHistoryItems(){
-
-        for(int i = 0 ; i < historyItems.size(); i++){
-        for (int a = 0; a < historyItems.get(i).size(); i++) {
+    private void setHistoryItems() {
+        Log.d("History Activity", "Running setHistoryItems()");
+        for (int i = 0; i < historyItems.size(); i++) {
+            for (int a = 0; a < historyItems.get(i).size(); i++) {
+            Log.d("HISTORY ITEM SIZE", String.valueOf(historyItems.get(0).size()));
             int finalI = i;
+            Log.d("Fetched History Item from HistoryActivity", historyItems.get(i).get(a).getPlaceId());
             JsonObjectRequest objectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + historyItems.get(i).get(a) + "&fields=photos,name,rating,vicinity,reviews&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
+                    "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + historyItems.get(i).get(a).getPlaceId() + "&fields=photos,name,rating,vicinity,reviews&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -124,8 +129,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 }
 
                                 locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, HistoryActivity.this, historyItems.get(finalI).get(a).getPlaceId()));
-
-
+                                // Client Side Validation for History Dates
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -137,7 +141,7 @@ public class HistoryActivity extends AppCompatActivity {
             );
             requestQueue.add(objectRequest);
         }
-        }
+    }
     }
 
     private void ErrorPopup(String message){
