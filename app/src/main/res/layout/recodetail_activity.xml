@@ -17,13 +17,14 @@
 
     <TextView
         android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_width="427dp"
+        android:layout_height="700dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/about_background"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantImage" />
 
     <TextView
         android:id="@+id/name"
@@ -32,7 +33,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="@string/test_string"
-        android:maxLength="30"
         android:textStyle="bold"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/test_string"
         android:maxLines="3"
+        android:text="@string/test_string"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -90,8 +90,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewItems"
         android:layout_width="match_parent"
-        android:layout_height="390dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="270dp"
         android:clipToPadding="false"
         android:paddingBottom="20dp"
         android:scrollbarSize="5dp"
@@ -99,10 +99,10 @@
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/location"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/googlemaps"
