@@ -59,7 +59,7 @@ public class NotificationActivity extends AppCompatActivity {
         subRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Create adapter
-        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
+        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, NotificationActivity.this, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
         {
             //Handling clicks
             @Override

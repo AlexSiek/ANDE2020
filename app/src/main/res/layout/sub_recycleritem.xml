@@ -67,6 +67,7 @@
         android:id="@+id/subImage"
         android:layout_width="110dp"
         android:layout_height="110dp"
+        android:transitionName="imageTransition"
         android:layout_alignParentRight="true" />
 
 </RelativeLayout>

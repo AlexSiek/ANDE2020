@@ -1,8 +1,11 @@
 package com.example.exploresg;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -79,7 +82,7 @@ public class SavedLocationsActivity extends AppCompatActivity {
         subRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Create adapter
-        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
+        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, SavedLocationsActivity.this, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
         {
             //Handling clicks
             @Override
@@ -87,7 +90,10 @@ public class SavedLocationsActivity extends AppCompatActivity {
             {
                 Intent i1 = new Intent(SavedLocationsActivity.this, RecoDetailActivity.class);
                 i1.putExtra("placeID", locationItem.getPlaceId());
-                startActivity(i1);            }
+                ImageView img = findViewById(R.id.subImage);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SavedLocationsActivity.this,  Pair.create(img,"imageTransition"));
+                startActivity(i1, options.toBundle());
+            }
         });
 
         //Set adapter to RecyclerView

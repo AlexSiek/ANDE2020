@@ -320,7 +320,7 @@ public class RecoPageActivity extends AppCompatActivity{
             subRecyclerView.setLayoutManager(linearLayoutManager);
             //Create adapter
             //Handling clicks
-            SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay, locationItemDisplay -> {
+            SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay, RecoPageActivity.this, locationItemDisplay -> {
                 Intent i1 = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
                 i1.putExtra("placeID", locationItemDisplay.getPlaceId());
                 startActivity(i1);

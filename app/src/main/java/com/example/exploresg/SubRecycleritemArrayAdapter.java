@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,11 +23,14 @@ import java.util.ArrayList;
 public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycleritemArrayAdapter.MyViewHolder> {
 
     private final ArrayList<SubRecycleritem> locationItem;
+    Context mContext;
+    private int lastPosition = -1;
 
     private final MyRecyclerViewItemClickListener mItemClickListener;
-    public SubRecycleritemArrayAdapter(ArrayList<SubRecycleritem> locationItem, MyRecyclerViewItemClickListener itemClickListener) {
+    public SubRecycleritemArrayAdapter(ArrayList<SubRecycleritem> locationItem, Context context, MyRecyclerViewItemClickListener itemClickListener) {
         this.locationItem = locationItem;
         this.mItemClickListener = itemClickListener;
+        this.mContext = context;
     }
 
     @NonNull
@@ -47,29 +52,39 @@ public class SubRecycleritemArrayAdapter extends RecyclerView.Adapter<SubRecycle
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        String imgUrl = locationItem.get(position).getImageUrl();
-        String name = locationItem.get(position).getName();
-        double rating = locationItem.get(position).getRating();
-        String vicinity = locationItem.get(position).getVicinity();
-        boolean openStatus = locationItem.get(position).getOpenStatus();
-        Context context = locationItem.get(position).getContext();
+        if (holder.getAdapterPosition() > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
+            ((MyViewHolder)holder).itemView.startAnimation(animation);
 
-        //Set Image
-        //holder.subImage.setImageResource(imageId);
-        Glide.with(context)
-                .load(imgUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.subImage);
-        holder.name.setText(name);
-        holder.rating.setRating((float) rating);
-        holder.ratingNumber.setText(String.valueOf(rating));
-        holder.vicinity.setText(vicinity);
-        if (openStatus) {
-            holder.openStatus.setText("Open");
-        } else {
-            holder.openStatus.setText("Closed");
-            holder.openStatus.setTextColor(Color.parseColor("#FF0000"));
+
+            String imgUrl = locationItem.get(position).getImageUrl();
+            String name = locationItem.get(position).getName();
+            double rating = locationItem.get(position).getRating();
+            String vicinity = locationItem.get(position).getVicinity();
+            boolean openStatus = locationItem.get(position).getOpenStatus();
+            Context context = locationItem.get(position).getContext();
+
+            //Set Image
+            //holder.subImage.setImageResource(imageId);
+            Glide.with(context)
+                    .load(imgUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.subImage);
+            holder.name.setText(name);
+            holder.rating.setRating((float) rating);
+            holder.ratingNumber.setText(String.valueOf(rating));
+            holder.vicinity.setText(vicinity);
+            if (openStatus) {
+                holder.openStatus.setText("Open");
+            } else {
+                holder.openStatus.setText("Closed");
+                holder.openStatus.setTextColor(Color.parseColor("#FF0000"));
+            }
+
+
+            lastPosition = holder.getAdapterPosition();
         }
+
 
     }
 

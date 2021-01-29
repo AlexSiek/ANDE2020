@@ -75,7 +75,7 @@ public class HistoryActivity extends AppCompatActivity {
         subRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Create adapter
-        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
+        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, HistoryActivity.this, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
         {
             //Handling clicks
             @Override
@@ -83,7 +83,8 @@ public class HistoryActivity extends AppCompatActivity {
             {
                 Intent i1 = new Intent(HistoryActivity.this, RecoDetailActivity.class);
                 i1.putExtra("placeID", locationItem.getPlaceId());
-                startActivity(i1);            }
+                startActivity(i1);
+            }
         });
 
         //Set adapter to RecyclerView
