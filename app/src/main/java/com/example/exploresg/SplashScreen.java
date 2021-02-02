@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class SplashScreen extends AppCompatActivity {
 
     public static boolean firstTimeSetUp = true;
@@ -44,17 +46,19 @@ public class SplashScreen extends AppCompatActivity {
         ss.setSpan(red, 23,32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(ss);
 
-        //Check and sets up for on first time
-//        prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
-//        boolean gFirstTimeSetUp = prefs.getBoolean(USetUp, true);
-//        if(gFirstTimeSetUp){
-//            firstTimeSetup();
-//            SharedPreferences.Editor editor = prefs.edit();
-//            editor.putInt(ULocation,50);
-//            editor.putBoolean(UNotification, true);
-//            editor.putBoolean(USetUp,false);
-//            editor.commit();
-//        }
+//        Check and sets up for on first time
+        prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
+        boolean gFirstTimeSetUp = prefs.getBoolean(USetUp, true);
+        if(gFirstTimeSetUp){
+            firstTimeSetup();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt(ULocation,50);
+            editor.putBoolean(UNotification, true);
+            editor.putBoolean(USetUp,false);
+            settingUpNotification();
+            Log.d("Notification: ", "setted up");
+            editor.commit();
+        }
 
 
         Thread splashThread = new Thread() {
@@ -86,13 +90,23 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     public void settingUpNotification(){
+        //Setting intent time/notification time
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Log.d("Notification","Notification calendar time has been set");
+
         //Creating a receiver intent
-        Intent notifyIntent = new Intent(this,NotificationReceiver.class);
+        Intent notifyIntent = new Intent(this, NotificationActivity.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_REMINDER, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Log.d("Notification","Pending intent has been set");
+
         //Alarm are services using the phone's system alarm
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        //RTC_WAKEUP wakes up the device when it is off
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  1000 * 60 * 60 * 9,1000 * 60 * 60 * 24, pendingIntent);
-        Log.d("Alarm","ON from Set Up");
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        Log.d("Notification","Alarm manager has been set");
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+        Log.d("Notification","Alarm has been turn on");
     }
 }

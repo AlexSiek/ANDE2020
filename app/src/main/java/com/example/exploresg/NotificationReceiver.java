@@ -15,6 +15,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 //        intent1.putExtra() can be used to pass data
         NotificationService.enqueueWork(context, intent1);
 //        context.startService(intent1);
-        Log.d("Notification","Notification intent has been started");
+        Log.d("Notification","Notification intent hxas been started");
     }
 }

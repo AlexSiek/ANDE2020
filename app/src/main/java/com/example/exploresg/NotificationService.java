@@ -36,7 +36,7 @@ public class NotificationService extends JobIntentService {
         Log.d("Notification","Notification has been built");
 
         //Sets up the intent to build when notification is clicked
-        Intent notifyIntent = new Intent(this, MainActivity.class);
+        Intent notifyIntent = new Intent(this, NotificationActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Log.d("Notification","Intents has been set up");
 
