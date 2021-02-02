@@ -169,7 +169,6 @@ public class RecoPageActivity extends AppCompatActivity{
         }
         Thread newThread = new Thread(() -> {
             try {
-                APIListSize();
                 generateLocationObjects();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -253,31 +252,6 @@ public class RecoPageActivity extends AppCompatActivity{
         }
     }
 
-    private void APIListSize()throws InterruptedException{
-        for(int i = 0; i < APIList.size(); i++) {
-
-            JsonObjectRequest objectRequest = new JsonObjectRequest(
-                    Request.Method.GET,
-                    APIList.get(i),
-                    null,
-                    response -> {
-                        try {
-                            if (response.has("next_page_token")) {
-                                pageToken = response.getString("next_page_token");
-                                String newAPI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570&pagetoken=" + pageToken;
-                                APIList.add(newAPI);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    },
-                    error -> ErrorPopup("No internet connection. Please try again.")
-            );
-            requestQueue1.add(objectRequest);
-            Thread.sleep(100);
-        }
-
-    }
 
     private void ErrorPopup(String message){
         new androidx.appcompat.app.AlertDialog.Builder(this)
