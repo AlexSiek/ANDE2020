@@ -195,13 +195,13 @@ public class RecoDetailActivity extends AppCompatActivity {
                         for (int i = 0; i < savedItem.size(); i++) {
                             if (savedItem.get(i).getPlaceId().equals(placeId)) {
                                 Toast.makeText(RecoDetailActivity.this, "Location removed", Toast.LENGTH_SHORT).show();
-                                btn.setImageResource(R.drawable.bookmark_border_purple_24px);
+                                btn.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
                                 db.removeSavedItemByPlaceId(placeId);
                                 return;
                             }
                         }
                         Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
-                        btn.setImageResource(R.drawable.bookmark_purple_24px);
+                        btn.setImageResource(R.drawable.ic_baseline_bookmark_24);
                         db.addSavedItem(placeId);
 
                     }else{
