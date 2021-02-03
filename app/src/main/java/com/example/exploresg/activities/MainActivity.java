@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.activities;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -19,6 +19,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exploresg.LocationTracker;
+import com.example.exploresg.recyclerItems.MainRecyclerItemArrayAdapter;
+import com.example.exploresg.recyclerItems.MainRecycleritem;
+import com.example.exploresg.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;

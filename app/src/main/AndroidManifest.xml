@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ANDE"
         android:windowBackground="#FFFFFF">
-        <activity android:name="com.example.exploresg.SplashScreen"
+        <activity android:name="com.example.exploresg.activities.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,40 +20,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.exploresg.MainActivity"
+        <activity android:name="com.example.exploresg.activities.MainActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.example.exploresg.SavedLocationsActivity"
+        <activity android:name="com.example.exploresg.activities.SavedLocationsActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.example.exploresg.SettingActivity">
+        <activity android:name="com.example.exploresg.activities.SettingActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.RecoPageActivity">
+        <activity android:name="com.example.exploresg.activities.RecoPageActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.AboutActivity">
+        <activity android:name="com.example.exploresg.activities.AboutActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.databaseTestActivity">
+        <activity android:name="com.example.exploresg.activities.databaseTestActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.RecoDetailActivity">
+        <activity android:name="com.example.exploresg.activities.RecoDetailActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.NotificationActivity">
+        <activity android:name="com.example.exploresg.activities.NotificationActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.HistoryActivity">
+        <activity android:name="com.example.exploresg.activities.HistoryActivity">
 
         </activity>
         <service
-            android:name="com.example.exploresg.NotificationService"
+            android:name="com.example.exploresg.notification.NotificationService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             >
         </service>
         <receiver
-            android:name="com.example.exploresg.NotificationReceiver"
+            android:name="com.example.exploresg.notification.NotificationReceiver"
             android:enabled="true"
             android:exported="true" >
         </receiver>

@@ -1,20 +1,18 @@
-package com.example.exploresg;
+package com.example.exploresg.notification;
 
-import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 
-import java.util.Calendar;
+import com.example.exploresg.R;
+import com.example.exploresg.activities.NotificationActivity;
 
 public class NotificationService extends JobIntentService {
     //

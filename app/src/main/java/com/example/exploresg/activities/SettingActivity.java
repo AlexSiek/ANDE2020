@@ -1,8 +1,7 @@
-package com.example.exploresg;
+package com.example.exploresg.activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.exploresg.notification.NotificationReceiver;
+import com.example.exploresg.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
@@ -156,7 +157,7 @@ public class SettingActivity extends AppCompatActivity {
         Log.d("Notification","Notification calendar time has been set");
 
         //Creating a receiver intent
-        Intent notifyIntent = new Intent(this,NotificationReceiver.class);
+        Intent notifyIntent = new Intent(this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_REMINDER, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Log.d("Notification","Pending intent has been set");
 

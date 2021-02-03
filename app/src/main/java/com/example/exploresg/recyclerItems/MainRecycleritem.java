@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.recyclerItems;
 
 public class MainRecycleritem {
     private int imageBtn;

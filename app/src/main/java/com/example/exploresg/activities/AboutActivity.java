@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.exploresg.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AboutActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exploresg.R;
+import com.example.exploresg.recyclerItems.SubRecycleritem;
+import com.example.exploresg.recyclerItems.SubRecycleritemArrayAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;

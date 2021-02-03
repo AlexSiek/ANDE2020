@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.exploresg.DatabaseHandler;
+import com.example.exploresg.recyclerItems.HistoryItem;
+import com.example.exploresg.R;
+import com.example.exploresg.recyclerItems.SubRecycleritem;
+import com.example.exploresg.recyclerItems.SubRecycleritemArrayAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;

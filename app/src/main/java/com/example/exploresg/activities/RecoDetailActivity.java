@@ -1,10 +1,9 @@
-package com.example.exploresg;
+package com.example.exploresg.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -22,13 +21,17 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.exploresg.DatabaseHandler;
+import com.example.exploresg.R;
+import com.example.exploresg.recyclerItems.ReviewRecycleritemArrayAdapter;
+import com.example.exploresg.recyclerItems.Reviewitem;
+import com.example.exploresg.recyclerItems.SavedItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class RecoDetailActivity extends AppCompatActivity {

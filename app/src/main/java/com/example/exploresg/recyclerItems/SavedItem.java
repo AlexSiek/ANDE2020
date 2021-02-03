@@ -1,4 +1,6 @@
-package com.example.exploresg;
+package com.example.exploresg.recyclerItems;
+
+import com.example.exploresg.recyclerItems.SubRecycleritem;
 
 public class SavedItem {
     public String placeId, timeStamp;

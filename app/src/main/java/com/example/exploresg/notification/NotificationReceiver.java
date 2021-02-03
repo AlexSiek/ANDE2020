@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

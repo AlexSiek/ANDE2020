@@ -1,4 +1,4 @@
-package com.example.exploresg;
+package com.example.exploresg.recyclerItems;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.exploresg.R;
 
 import java.util.ArrayList;
 

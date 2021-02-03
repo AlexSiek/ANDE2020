@@ -6,12 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.sql.Timestamp;
+import com.example.exploresg.recyclerItems.HistoryItem;
+import com.example.exploresg.recyclerItems.SavedItem;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
