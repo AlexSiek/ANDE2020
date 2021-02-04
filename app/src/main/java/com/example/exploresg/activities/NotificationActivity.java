@@ -227,6 +227,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         for(int i = 0; i < APIList.size() ; i++) {
 
+            int finalI = i;
             JsonObjectRequest objectRequest = new JsonObjectRequest(
                     Request.Method.GET,
                     APIList.get(i),
@@ -271,10 +272,12 @@ public class NotificationActivity extends AppCompatActivity {
                                 }
                                 }
                             }
-                            try {
-                                setUIRef();
-                            }catch(Exception e){
-                                ErrorPopup("An error has occurred. Please try again.");
+                            if (finalI == APIList.size() - 1 ) {
+                                try {
+                                    setUIRef();
+                                }catch(Exception e){
+                                    ErrorPopup("An error has occurred. Please try again.");
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
