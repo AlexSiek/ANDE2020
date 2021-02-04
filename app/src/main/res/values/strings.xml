@@ -14,7 +14,7 @@
     <string name="main_header">What would you like to explore?</string>
 
     <!--    Reco Page Activity-->
-    <string name="recopage_header">Here are some locations...</string>
+    <string name="recopage_header">Here are some random locations...</string>
     <string name="recopage_randomize">Randomize</string>
 
     <!--    About Activity-->

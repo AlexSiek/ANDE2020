@@ -12,6 +12,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -56,7 +57,6 @@ public class RecoPageActivity extends AppCompatActivity{
     private final ArrayList<String> placeTypes = new ArrayList<>();
     private String category;
     private final ArrayList<String> APIList = new ArrayList<>();
-    private String pageToken= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,14 @@ public class RecoPageActivity extends AppCompatActivity{
 
                     latitude = gps.getLatitude();
                     longitude = gps.getLongitude();
+                    int counter = 0;
                     if(latitude == 0){
-                        ErrorPopup("There is a problem getting your location. Please try again.");
+                        Thread.sleep(1000);
+                        getLocation();
+                        counter++;
+
+                        if(counter == 5)
+                            ErrorPopup("There is a problem getting your location. Please try again.");
 
                     }else{
                         Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
@@ -168,6 +174,8 @@ public class RecoPageActivity extends AppCompatActivity{
         SharedPreferences prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
         int gLocation = prefs.getInt(ULocation,50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
         int meters = gLocation * 1000;
+        TextView distance = findViewById(R.id.distanceText);
+        distance.setText("Within " + gLocation + "km");
 
         placeTypes(category);
         String type;

@@ -8,4 +8,6 @@
         android:title="@string/popup_option_2" />
     <item android:id="@+id/database_test"
         android:title="@string/popup_option_3" />
+    <item android:id="@+id/notification_activity"
+        android:title="Notification Test" />
 </menu>
