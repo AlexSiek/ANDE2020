@@ -2,13 +2,16 @@ package com.example.exploresg.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.exploresg.LocationTracker;
@@ -203,27 +207,29 @@ public class RecoPageActivity extends AppCompatActivity{
                                     if((businessStatus.equals("OPERATIONAL") ||businessStatus.equals("CLOSED_TEMPORARILY"))) {
                                         String name = results.getString("name");
                                         String vicinity = results.getString("vicinity");
-                                        String placeId = results.getString("place_id");
+                                        if (vicinity.contains("Singapore")) {
+                                            String placeId = results.getString("place_id");
 
-                                        boolean open_now = false;
-                                        double rating = 0.0;
-                                        String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
-                                        String photo_ref;
-                                        if (results.has("opening_hours")) {
-                                            JSONObject opening_hours = results.getJSONObject("opening_hours");
-                                            open_now = opening_hours.getBoolean("open_now");
-                                        }
-                                        if (results.has("photos")) {
-                                            JSONArray photosArr = results.getJSONArray("photos");
-                                            JSONObject PhotoResults = photosArr.getJSONObject(0);
-                                            photo_ref = PhotoResults.getString("photo_reference");
-                                            ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
-                                        }
-                                        if (results.has("rating")) {
-                                            rating = results.getDouble("rating");
-                                        }
-                                        locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, RecoPageActivity.this, placeId));
+                                            boolean open_now = false;
+                                            double rating = 0.0;
+                                            String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+                                            String photo_ref;
+                                            if (results.has("opening_hours")) {
+                                                JSONObject opening_hours = results.getJSONObject("opening_hours");
+                                                open_now = opening_hours.getBoolean("open_now");
+                                            }
+                                            if (results.has("photos")) {
+                                                JSONArray photosArr = results.getJSONArray("photos");
+                                                JSONObject PhotoResults = photosArr.getJSONObject(0);
+                                                photo_ref = PhotoResults.getString("photo_reference");
+                                                ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+                                            }
+                                            if (results.has("rating")) {
+                                                rating = results.getDouble("rating");
+                                            }
+                                            locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, RecoPageActivity.this, placeId));
 
+                                        }
                                     }
                                 }
                                 try {
@@ -290,7 +296,9 @@ public class RecoPageActivity extends AppCompatActivity{
             SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay, RecoPageActivity.this, locationItemDisplay -> {
                 Intent i1 = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
                 i1.putExtra("placeID", locationItemDisplay.getPlaceId());
-                startActivity(i1);
+                ImageView img = findViewById(R.id.subImage);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RecoPageActivity.this,  Pair.create(img,"imageTransition"));
+                startActivity(i1,options.toBundle());
             });
 
             //Set adapter to RecyclerView

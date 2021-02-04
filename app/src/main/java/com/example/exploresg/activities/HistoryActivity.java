@@ -43,7 +43,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         //load saved items from DB
         DatabaseHandler db = new DatabaseHandler(this);
-        if(db.getAllSavedItems() != null)
+        if(db.getAllHistoryItems() != null)
             historyItems = db.getAllHistoryItems();
 
         setHistoryItems();

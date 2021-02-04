@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.exploresg.DatabaseHandler;
 import com.example.exploresg.R;
+import com.example.exploresg.recyclerItems.HistoryItem;
 import com.example.exploresg.recyclerItems.ReviewRecycleritemArrayAdapter;
 import com.example.exploresg.recyclerItems.Reviewitem;
 import com.example.exploresg.recyclerItems.SavedItem;
@@ -44,6 +45,8 @@ public class RecoDetailActivity extends AppCompatActivity {
     //Saved Item
     private ArrayList<SavedItem> savedItem = new ArrayList<>();
     private String locationUrl;
+    //History
+    private ArrayList<ArrayList<HistoryItem>> historyItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +64,16 @@ public class RecoDetailActivity extends AppCompatActivity {
         //RecyclerView
 
 
+        //load saved items from DB
+        if(db.getAllHistoryItems() != null)
+            historyItems = db.getAllHistoryItems();
+
+        if(!historyItems.get(0).contains(placeId)){
+            db.addHistoryItem(placeId);
+
+        }
 
         // To be called after fetching data - Set Selected Reco Detail Info
-        db.addHistoryItem(placeId);
         setRecoDetailData();
     }
 
