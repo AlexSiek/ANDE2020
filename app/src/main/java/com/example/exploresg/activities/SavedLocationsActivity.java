@@ -1,20 +1,18 @@
 package com.example.exploresg.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
-import android.view.MenuItem;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.exploresg.DatabaseHandler;
@@ -32,11 +30,11 @@ import java.util.ArrayList;
 
 public class SavedLocationsActivity extends AppCompatActivity {
 
-    private RecyclerView subRecyclerView;
-    private ArrayList<SubRecycleritem> locationItem = new ArrayList<>();
+    private final ArrayList<SubRecycleritem> locationItem = new ArrayList<>();
     private ArrayList<SavedItem> savedItem = new ArrayList<>();
     private RequestQueue requestQueue;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,46 +50,38 @@ public class SavedLocationsActivity extends AppCompatActivity {
         //RecyclerView
         setSavedItems();
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        break;
-                    case R.id.history:
-                        break;
-                    case R.id.saved:
-                        break;
-                }
-                return true;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    break;
+                case R.id.history:
+                    break;
+                case R.id.saved:
+                    break;
             }
+            return true;
         });
     }
 
     private void setUIRef()
     {
         //Reference of RecyclerView
-        subRecyclerView = findViewById(R.id.locationItems);
+        RecyclerView subRecyclerView = findViewById(R.id.locationItems);
         //Linear Layout Manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SavedLocationsActivity.this, RecyclerView.VERTICAL, false);
         //Set Layout Manager to RecyclerView
         subRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Create adapter
-        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, SavedLocationsActivity.this, new SubRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
-        {
-            //Handling clicks
-            @Override
-            public void onItemClicked(SubRecycleritem locationItem)
-            {
-                Intent i1 = new Intent(SavedLocationsActivity.this, RecoDetailActivity.class);
-                i1.putExtra("placeID", locationItem.getPlaceId());
-                ImageView img = findViewById(R.id.subImage);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SavedLocationsActivity.this,  Pair.create(img,"imageTransition"));
-                startActivity(i1, options.toBundle());
-            }
+        //Handling clicks
+        SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, SavedLocationsActivity.this, locationItem -> {
+            Intent i1 = new Intent(SavedLocationsActivity.this, RecoDetailActivity.class);
+            i1.putExtra("placeID", locationItem.getPlaceId());
+            ImageView img = findViewById(R.id.subImage);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SavedLocationsActivity.this,  Pair.create(img,"imageTransition"));
+            startActivity(i1, options.toBundle());
         });
 
         //Set adapter to RecyclerView
@@ -107,9 +97,7 @@ public class SavedLocationsActivity extends AppCompatActivity {
                 Request.Method.GET,
                 "https://maps.googleapis.com/maps/api/place/details/json?place_id="+savedItem.get(i).getPlaceId()+"&fields=photos,name,rating,vicinity,reviews&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
                 null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+                    response -> {
                         try {
                             JSONObject results = response.getJSONObject("result");
                             String photo_ref;
@@ -141,19 +129,18 @@ public class SavedLocationsActivity extends AppCompatActivity {
                         }
                         setUIRef();
 
-                    }
-                },
-                error -> ErrorPopup("No internet connection. Please try again.")
+                    },
+                error -> ErrorPopup()
         );
         requestQueue.add(objectRequest);
 
         }
     }
 
-    private void ErrorPopup(String message){
+    private void ErrorPopup(){
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Error")
-                .setMessage(message)
+                .setMessage("No internet connection. Please try again.")
                 .setPositiveButton("ok", (dialog, which) -> {
                     Intent i = new Intent(SavedLocationsActivity.this, MainActivity.class);
                     startActivity(i);
@@ -161,5 +148,20 @@ public class SavedLocationsActivity extends AppCompatActivity {
                 .create().show();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        savedItem.clear();
+        locationItem.clear();
+        setContentView(R.layout.savedlocations_activity);
+        requestQueue= Volley.newRequestQueue(this);
+
+        //load saved items from DB
+        DatabaseHandler db = new DatabaseHandler(this);
+        if(db.getAllSavedItems() != null)
+            savedItem = db.getAllSavedItems();
+        setSavedItems();
+
+    }
 
 }

@@ -16,14 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.exploresg.DatabaseHandler;
 import com.example.exploresg.R;
-import com.example.exploresg.recyclerItems.HistoryItem;
 import com.example.exploresg.recyclerItems.ReviewRecycleritemArrayAdapter;
 import com.example.exploresg.recyclerItems.Reviewitem;
 import com.example.exploresg.recyclerItems.SavedItem;
@@ -36,17 +34,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class RecoDetailActivity extends AppCompatActivity {
-    //Display
-    private RecyclerView reviewRecyclerView;
-    private ArrayList<Reviewitem> reviewItem = new ArrayList<>();
+    private final ArrayList<Reviewitem> reviewItem = new ArrayList<>();
     private String placeId;
     //Fetch API
     private RequestQueue requestQueue;
     //Saved Item
     private ArrayList<SavedItem> savedItem = new ArrayList<>();
     private String locationUrl;
-    //History
-    private ArrayList<ArrayList<HistoryItem>> historyItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +49,18 @@ public class RecoDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         placeId = Objects.requireNonNull(intent.getExtras()).getString("placeID");
         DatabaseHandler db = new DatabaseHandler(this);
-        if(db.getAllSavedItems() != null)
+        if(db.getAllSavedItems() != null) {
+            ImageView btn = findViewById(R.id.saveBtn);
             savedItem = db.getAllSavedItems();
+            for (int i = 0; i < savedItem.size(); i++) {
+                if(savedItem.get(i).getPlaceId().equals(placeId)){
+                    btn.setImageResource(R.drawable.ic_baseline_bookmark_24);
+                }
+            }
+        }
 
         //RecyclerView
         requestQueue= Volley.newRequestQueue(this);
-
-        //RecyclerView
-
-
-        //load saved items from DB
-        if(db.getAllHistoryItems() != null)
-            historyItems = db.getAllHistoryItems();
-
-        if(!historyItems.get(0).contains(placeId)){
-            db.addHistoryItem(placeId);
-
-        }
-
         // To be called after fetching data - Set Selected Reco Detail Info
         setRecoDetailData();
     }
@@ -90,69 +78,66 @@ public class RecoDetailActivity extends AppCompatActivity {
                     Request.Method.GET,
                     "https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeId+"&fields=photos,name,rating,formatted_address,reviews,url&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
                     null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONObject results = response.getJSONObject("result");
-                                    //Main declaration
-                                    String photo_ref;
-                                    String name = results.getString("name");
-                                    double rating = 0.0;
-                                    String ratingText = "";
-                                    String vicinity = results.getString("formatted_address");
-                                    int lastComma = vicinity.lastIndexOf(",");
-                                    StringBuilder formattedVicinity = new StringBuilder(vicinity);
-                                    formattedVicinity.setCharAt(lastComma+1, '\0');
-                                    formattedVicinity.setCharAt(lastComma, '\n');
-                                    String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
-                                    locationUrl = results.getString("url");
-                                    if (results.has("photos")) {
-                                        JSONArray photosArr = results.getJSONArray("photos");
-                                        JSONObject PhotoResults = photosArr.getJSONObject(0);
-                                        photo_ref = PhotoResults.getString("photo_reference");
-                                        ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
-                                    }
-                                    if (results.has("rating")) {
-                                        rating = results.getDouble("rating");
-                                        ratingText = Double.toString(rating);
-                                    }
-                                    Glide.with(RecoDetailActivity.this)
-                                            .load(ImgUrl)
-                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                            .into(imageView);
-                                    nameView.setText(name);
-                                    ratingView.setRating((float) rating);
-                                    ratingNumberView.setText(ratingText);
-                                    vicinityView.setText(formattedVicinity);
-
-                                //Review declaration
-                                if (results.has("reviews")) {
-                                    String reviewProfilePic;
-                                    String authorName;
-                                    double reviewRating;
-                                    String reviewText= "";
-
-                                    JSONArray reviewsArr = results.getJSONArray("reviews");
-                                    for (int i = 0; i < reviewsArr.length(); i++) {
-                                        JSONObject reviewResults = reviewsArr.getJSONObject(i);
-                                        reviewProfilePic = reviewResults.getString("profile_photo_url");
-                                        authorName = reviewResults.getString("author_name");
-                                        reviewRating = reviewResults.getDouble("rating");
-                                        reviewText = reviewResults.getString("text");
-
-                                        reviewItem.add(new Reviewitem(reviewProfilePic, authorName, reviewRating, reviewText, RecoDetailActivity.this));
-                                    }
+                    response -> {
+                        try {
+                            JSONObject results = response.getJSONObject("result");
+                                //Main declaration
+                                String photo_ref;
+                                String name = results.getString("name");
+                                double rating = 0.0;
+                                String ratingText = "";
+                                String vicinity = results.getString("formatted_address");
+                                int lastComma = vicinity.lastIndexOf(",");
+                                StringBuilder formattedVicinity = new StringBuilder(vicinity);
+                                formattedVicinity.setCharAt(lastComma+1, '\0');
+                                formattedVicinity.setCharAt(lastComma, '\n');
+                                String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+                                locationUrl = results.getString("url");
+                                if (results.has("photos")) {
+                                    JSONArray photosArr = results.getJSONArray("photos");
+                                    JSONObject PhotoResults = photosArr.getJSONObject(0);
+                                    photo_ref = PhotoResults.getString("photo_reference");
+                                    ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
                                 }
+                                if (results.has("rating")) {
+                                    rating = results.getDouble("rating");
+                                    ratingText = Double.toString(rating);
+                                }
+                                Glide.with(RecoDetailActivity.this)
+                                        .load(ImgUrl)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .into(imageView);
+                                nameView.setText(name);
+                                ratingView.setRating((float) rating);
+                                ratingNumberView.setText(ratingText);
+                                vicinityView.setText(formattedVicinity);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            //Review declaration
+                            if (results.has("reviews")) {
+                                String reviewProfilePic;
+                                String authorName;
+                                double reviewRating;
+                                String reviewText;
+
+                                JSONArray reviewsArr = results.getJSONArray("reviews");
+                                for (int i = 0; i < reviewsArr.length(); i++) {
+                                    JSONObject reviewResults = reviewsArr.getJSONObject(i);
+                                    reviewProfilePic = reviewResults.getString("profile_photo_url");
+                                    authorName = reviewResults.getString("author_name");
+                                    reviewRating = reviewResults.getDouble("rating");
+                                    reviewText = reviewResults.getString("text");
+
+                                    reviewItem.add(new Reviewitem(reviewProfilePic, authorName, reviewRating, reviewText, RecoDetailActivity.this));
+                                }
                             }
-                            setUIRef();
 
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        setUIRef();
+
                     },
-                    error -> ErrorPopup("No internet connection. Please try again.")
+                    error -> ErrorPopup()
             );
             requestQueue.add(objectRequest);
 
@@ -161,31 +146,25 @@ public class RecoDetailActivity extends AppCompatActivity {
     private void setUIRef()
     {
         //Reference of RecyclerView
-        reviewRecyclerView = findViewById(R.id.reviewItems);
+        //Display
+        RecyclerView reviewRecyclerView = findViewById(R.id.reviewItems);
         //Linear Layout Manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RecoDetailActivity.this, RecyclerView.VERTICAL, false);
         //Set Layout Manager to RecyclerView
         reviewRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Create adapter
-        ReviewRecycleritemArrayAdapter myRecyclerViewAdapter = new ReviewRecycleritemArrayAdapter(reviewItem, new ReviewRecycleritemArrayAdapter.MyRecyclerViewItemClickListener()
-        {
-            //Handling clicks
-            @Override
-            public void onItemClicked(Reviewitem reviewItem)
-            {
-                Toast.makeText(RecoDetailActivity.this, reviewItem.getAuthorName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        //Handling clicks
+        ReviewRecycleritemArrayAdapter myRecyclerViewAdapter = new ReviewRecycleritemArrayAdapter(reviewItem, reviewItem -> Toast.makeText(RecoDetailActivity.this, reviewItem.getAuthorName(), Toast.LENGTH_SHORT).show());
 
         //Set adapter to RecyclerView
         reviewRecyclerView.setAdapter(myRecyclerViewAdapter);
     }
 
-    private void ErrorPopup(String message){
+    private void ErrorPopup(){
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Error")
-                .setMessage(message)
+                .setMessage("No internet connection. Please try again.")
                 .setPositiveButton("ok", (dialog, which) -> {
                     Intent i = new Intent(RecoDetailActivity.this, MainActivity.class);
                     startActivity(i);
@@ -220,6 +199,8 @@ public class RecoDetailActivity extends AppCompatActivity {
                     }else{
                         Toast.makeText(RecoDetailActivity.this, "Location saved", Toast.LENGTH_SHORT).show();
                         db.addSavedItem(placeId);
+                        btn.setImageResource(R.drawable.ic_baseline_bookmark_24);
+
                     }
                 }
                 break;
@@ -229,5 +210,6 @@ public class RecoDetailActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
 }
