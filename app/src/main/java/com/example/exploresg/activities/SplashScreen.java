@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.toolbox.Volley;
+import com.example.exploresg.DatabaseHandler;
 import com.example.exploresg.R;
 
 import java.util.Calendar;
@@ -62,6 +64,7 @@ public class SplashScreen extends AppCompatActivity {
         }
 
 
+
         Thread splashThread = new Thread() {
 
             public void run() {
@@ -89,7 +92,13 @@ public class SplashScreen extends AppCompatActivity {
         Log.d("Alarm","ON from Set Up");
 
     }
-
+    protected void onRestart() {
+        super.onRestart();
+        // Launch the MainActivity class
+        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+        startActivity(intent);
+    }
+    
     public void settingUpNotification(){
         //Setting intent time/notification time
         Calendar calendar = Calendar.getInstance();

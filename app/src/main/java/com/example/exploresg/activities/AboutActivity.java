@@ -19,15 +19,19 @@ public class AboutActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
+            Intent i;
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
+                        i = new Intent(AboutActivity.this, HistoryActivity.class);
+                        startActivity(i);
                         break;
                     case R.id.history:
+                        i = new Intent(AboutActivity.this, HistoryActivity.class);
+                        startActivity(i);
                         break;
                     case R.id.saved:
-                        Intent i = new Intent(AboutActivity.this, SavedLocationsActivity.class);
+                        i = new Intent(AboutActivity.this, SavedLocationsActivity.class);
                         startActivity(i);
                         break;
                 }

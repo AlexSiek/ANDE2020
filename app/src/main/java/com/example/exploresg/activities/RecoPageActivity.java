@@ -8,20 +8,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.exploresg.LocationTracker;
@@ -32,6 +32,7 @@ import com.example.exploresg.recyclerItems.SubRecycleritemArrayAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
@@ -44,7 +45,6 @@ public class RecoPageActivity extends AppCompatActivity{
     //Fetch API
     private RequestQueue requestQueue;
     //Recycler items
-    private RecyclerView subRecyclerView;
     private final ArrayList<SubRecycleritem> locationItem = new ArrayList<>();
     private final ArrayList<SubRecycleritem> locationItemDisplay = new ArrayList<>();
     //Location Settings
@@ -57,6 +57,7 @@ public class RecoPageActivity extends AppCompatActivity{
     private final ArrayList<String> placeTypes = new ArrayList<>();
     private String category;
     private final ArrayList<String> APIList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +170,7 @@ public class RecoPageActivity extends AppCompatActivity{
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void jsonParseReco(){
 
         SharedPreferences prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
@@ -195,59 +197,60 @@ public class RecoPageActivity extends AppCompatActivity{
 
     private void generateLocationObjects() throws InterruptedException {
 
-        for(final int[] i = {0}; i[0] < APIList.size(); i[0]++) {
+        for( int i = 0; i < APIList.size(); i++) {
 
+            int finalI = i;
             JsonObjectRequest objectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    APIList.get(i[0]),
+                    APIList.get(i),
                     null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray resultsArray = response.getJSONArray("results");
-                                for (int k = 0; k < resultsArray.length(); k++) {
-                                    JSONObject results = resultsArray.getJSONObject(k);
-                                    String businessStatus = "";
-                                    if(results.has("business_status"))
-                                        businessStatus = results.getString("business_status");
+                    response -> {
+                        try {
+                            JSONArray resultsArray = response.getJSONArray("results");
+                            for (int k = 0; k < resultsArray.length(); k++) {
+                                JSONObject results = resultsArray.getJSONObject(k);
+                                String businessStatus = "";
+                                if(results.has("business_status"))
+                                    businessStatus = results.getString("business_status");
 
-                                    if((businessStatus.equals("OPERATIONAL") ||businessStatus.equals("CLOSED_TEMPORARILY"))) {
-                                        String name = results.getString("name");
-                                        String vicinity = results.getString("vicinity");
-                                        if (vicinity.contains("Singapore")) {
-                                            String placeId = results.getString("place_id");
+                                if((businessStatus.equals("OPERATIONAL") ||businessStatus.equals("CLOSED_TEMPORARILY"))) {
+                                    String name = results.getString("name");
+                                    String vicinity = results.getString("vicinity");
+                                    if (vicinity.contains("Singapore")) {
+                                        String placeId = results.getString("place_id");
 
-                                            boolean open_now = false;
-                                            double rating = 0.0;
-                                            String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
-                                            String photo_ref;
-                                            if (results.has("opening_hours")) {
-                                                JSONObject opening_hours = results.getJSONObject("opening_hours");
-                                                open_now = opening_hours.getBoolean("open_now");
-                                            }
-                                            if (results.has("photos")) {
-                                                JSONArray photosArr = results.getJSONArray("photos");
-                                                JSONObject PhotoResults = photosArr.getJSONObject(0);
-                                                photo_ref = PhotoResults.getString("photo_reference");
-                                                ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
-                                            }
-                                            if (results.has("rating")) {
-                                                rating = results.getDouble("rating");
-                                            }
-                                            locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, RecoPageActivity.this, placeId));
-
+                                        boolean open_now = false;
+                                        double rating = 0.0;
+                                        String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+                                        String photo_ref;
+                                        if (results.has("opening_hours")) {
+                                            JSONObject opening_hours = results.getJSONObject("opening_hours");
+                                            open_now = opening_hours.getBoolean("open_now");
                                         }
+                                        if (results.has("photos")) {
+                                            JSONArray photosArr = results.getJSONArray("photos");
+                                            JSONObject PhotoResults = photosArr.getJSONObject(0);
+                                            photo_ref = PhotoResults.getString("photo_reference");
+                                            ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+                                        }
+                                        if (results.has("rating")) {
+                                            rating = results.getDouble("rating");
+                                        }
+                                        locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, RecoPageActivity.this, placeId));
+
                                     }
                                 }
+                            }
+                            if (finalI == APIList.size() - 1 ) {
                                 try {
                                     renderView();
                                 }catch(Exception e){
                                     ErrorPopup("An error has occurred. Please try again.");
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     },
                     error -> ErrorPopup("No internet connection. Please try again.")

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -22,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.exploresg.DatabaseHandler;
 import com.example.exploresg.R;
+import com.example.exploresg.recyclerItems.HistoryItem;
 import com.example.exploresg.recyclerItems.ReviewRecycleritemArrayAdapter;
 import com.example.exploresg.recyclerItems.Reviewitem;
 import com.example.exploresg.recyclerItems.SavedItem;
@@ -41,6 +43,7 @@ public class RecoDetailActivity extends AppCompatActivity {
     //Saved Item
     private ArrayList<SavedItem> savedItem = new ArrayList<>();
     private String locationUrl;
+    private final ArrayList<String> historyPlaceID = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,26 @@ public class RecoDetailActivity extends AppCompatActivity {
                     btn.setImageResource(R.drawable.ic_baseline_bookmark_24);
                 }
             }
+        }
+
+        if(db.getAllHistoryItems() != null) {
+            //History item
+            ArrayList<ArrayList<HistoryItem>> historyItems = db.getAllHistoryItems();
+            for (int i = 0; i < historyItems.size(); i++) {
+                for(int k = 0 ; k < historyItems.get(i).size(); k++){
+                    historyPlaceID.add(historyItems.get(i).get(k).getPlaceId());
+                    if(k == historyItems.get(i).size() - 1){
+                        if(!historyPlaceID.contains(placeId)){
+                            db.addHistoryItem(placeId);
+                        }else{
+                            db.removeHistoryItemByPlaceId(placeId);
+                            db.addHistoryItem(placeId);
+                        }
+                    }
+                }
+            }
+        }else{
+            db.addHistoryItem(placeId);
         }
 
         //RecyclerView
@@ -87,10 +110,15 @@ public class RecoDetailActivity extends AppCompatActivity {
                                 double rating = 0.0;
                                 String ratingText = "";
                                 String vicinity = results.getString("formatted_address");
-                                int lastComma = vicinity.lastIndexOf(",");
-                                StringBuilder formattedVicinity = new StringBuilder(vicinity);
-                                formattedVicinity.setCharAt(lastComma+1, '\0');
-                                formattedVicinity.setCharAt(lastComma, '\n');
+                            StringBuilder formattedVicinity = new StringBuilder(vicinity);
+
+                            if(vicinity.contains(",")){
+                                    int lastComma = vicinity.lastIndexOf(",");
+                                    formattedVicinity.setCharAt(lastComma+1, '\0');
+                                    formattedVicinity.setCharAt(lastComma, '\n');
+                                }
+
+
                                 String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
                                 locationUrl = results.getString("url");
                                 if (results.has("photos")) {
@@ -110,7 +138,12 @@ public class RecoDetailActivity extends AppCompatActivity {
                                 nameView.setText(name);
                                 ratingView.setRating((float) rating);
                                 ratingNumberView.setText(ratingText);
+                            if(vicinity.contains(",")){
                                 vicinityView.setText(formattedVicinity);
+
+                            }else{
+                                vicinityView.setText(vicinity);
+                            }
 
                             //Review declaration
                             if (results.has("reviews")) {
@@ -131,8 +164,8 @@ public class RecoDetailActivity extends AppCompatActivity {
                                 }
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                           ErrorPopup();
                         }
                         setUIRef();
 

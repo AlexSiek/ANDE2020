@@ -53,12 +53,19 @@ public class SavedLocationsActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Intent i;
             switch (item.getItemId()) {
                 case R.id.home:
+                    i = new Intent(SavedLocationsActivity.this, HistoryActivity.class);
+                    startActivity(i);
                     break;
                 case R.id.history:
+                    i = new Intent(SavedLocationsActivity.this, HistoryActivity.class);
+                    startActivity(i);
                     break;
                 case R.id.saved:
+                    i = new Intent(SavedLocationsActivity.this, SavedLocationsActivity.class);
+                    startActivity(i);
                     break;
             }
             return true;
