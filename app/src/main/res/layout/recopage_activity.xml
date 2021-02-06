@@ -61,26 +61,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/randomize" />
 
-    <!--        <Button-->
-<!--        android:id="@+id/randomBtn"-->
-<!--        android:layout_width="225dp"-->
-<!--        android:layout_height="57dp"-->
-<!--        android:layout_marginBottom="56dp"-->
-<!--        android:background="#33D869"-->
-<!--        android:backgroundTint="#33D869"-->
-<!--        android:fontFamily="sans-serif-medium"-->
-<!--        android:onClick="OnClick"-->
-<!--        android:radius="20dp"-->
-<!--        android:text="@string/recopage_randomize"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/recoLocationItems"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/recoLocationItems"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
