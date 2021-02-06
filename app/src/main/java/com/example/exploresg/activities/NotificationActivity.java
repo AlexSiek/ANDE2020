@@ -281,14 +281,15 @@ public class NotificationActivity extends AppCompatActivity {
                                 }
                             }
                             if (finalI == APIList.size() - 1 ) {
+                                Thread.sleep(1000);
                                 try {
                                     setUIRef();
                                 }catch(Exception e){
                                     ErrorPopup("An error has occurred. Please try again.");
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } catch (JSONException | InterruptedException e) {
+                            ErrorPopup("An error has occurred. Please try again.");
                         }
                     },
                     error -> ErrorPopup("No internet connection. Please try again.")
