@@ -306,9 +306,7 @@ public class RecoPageActivity extends AppCompatActivity{
             SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItemDisplay, RecoPageActivity.this, locationItemDisplay -> {
                 Intent i1 = new Intent(RecoPageActivity.this, RecoDetailActivity.class);
                 i1.putExtra("placeID", locationItemDisplay.getPlaceId());
-                ImageView img = findViewById(R.id.subImage);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RecoPageActivity.this,  Pair.create(img,"imageTransition"));
-                startActivity(i1,options.toBundle());
+                startActivity(i1);
             });
 
             //Set adapter to RecyclerView

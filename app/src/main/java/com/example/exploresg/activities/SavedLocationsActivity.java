@@ -89,9 +89,7 @@ public class SavedLocationsActivity extends AppCompatActivity {
         SubRecycleritemArrayAdapter myRecyclerViewAdapter = new SubRecycleritemArrayAdapter(locationItem, SavedLocationsActivity.this, locationItem -> {
             Intent i1 = new Intent(SavedLocationsActivity.this, RecoDetailActivity.class);
             i1.putExtra("placeID", locationItem.getPlaceId());
-            ImageView img = findViewById(R.id.subImage);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SavedLocationsActivity.this,  Pair.create(img,"imageTransition"));
-            startActivity(i1, options.toBundle());
+            startActivity(i1);
         });
 
         //Set adapter to RecyclerView
