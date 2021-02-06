@@ -108,10 +108,9 @@ public class SplashScreen extends AppCompatActivity {
         Log.d("Notification","Pending intent has been set");
 
         //Alarm are services using the phone's system alarm
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
         Log.d("Notification","Alarm manager has been set");
 
-        assert alarmManager != null;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
         Log.d("Notification","Alarm has been turn on");
     }
