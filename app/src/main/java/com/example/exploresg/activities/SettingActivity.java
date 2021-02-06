@@ -95,16 +95,22 @@ public class SettingActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
                 switch (item.getItemId()) {
                     case R.id.home:
-                        Intent i = new Intent(SettingActivity.this, MainActivity.class);
+                        i = new Intent(SettingActivity.this, MainActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                     case R.id.history:
+                        i = new Intent(SettingActivity.this, HistoryActivity.class);
+                        startActivity(i);
+                        finish();
                         break;
                     case R.id.saved:
-                        Intent e = new Intent(SettingActivity.this, SavedLocationsActivity.class);
-                        startActivity(e);
+                        i = new Intent(SettingActivity.this, SavedLocationsActivity.class);
+                        startActivity(i);
+                        finish();
                         break;
                 }
                 return true;

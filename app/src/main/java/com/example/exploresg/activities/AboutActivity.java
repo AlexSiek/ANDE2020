@@ -23,16 +23,19 @@ public class AboutActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        i = new Intent(AboutActivity.this, HistoryActivity.class);
+                        i = new Intent(AboutActivity.this, MainActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                     case R.id.history:
                         i = new Intent(AboutActivity.this, HistoryActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                     case R.id.saved:
                         i = new Intent(AboutActivity.this, SavedLocationsActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                 }
                 return true;

@@ -63,21 +63,32 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Intent i;
                 switch (item.getItemId()) {
                     case R.id.home:
-                         i = new Intent(MainActivity.this, MainActivity.class);
-                         startActivity(i);
+                        i = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
                         break;
                     case R.id.history:
                         i = new Intent(MainActivity.this, HistoryActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                     case R.id.saved:
                         i = new Intent(MainActivity.this, SavedLocationsActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+        setIntent.addCategory(Intent.CATEGORY_HOME);
+        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(setIntent);
     }
 
     @Override

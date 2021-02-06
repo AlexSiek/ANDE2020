@@ -56,16 +56,19 @@ public class SavedLocationsActivity extends AppCompatActivity {
             Intent i;
             switch (item.getItemId()) {
                 case R.id.home:
-                    i = new Intent(SavedLocationsActivity.this, HistoryActivity.class);
+                    i = new Intent(SavedLocationsActivity.this, MainActivity.class);
                     startActivity(i);
+                    finish();
                     break;
                 case R.id.history:
                     i = new Intent(SavedLocationsActivity.this, HistoryActivity.class);
                     startActivity(i);
+                    finish();
                     break;
                 case R.id.saved:
                     i = new Intent(SavedLocationsActivity.this, SavedLocationsActivity.class);
                     startActivity(i);
+                    finish();
                     break;
             }
             return true;

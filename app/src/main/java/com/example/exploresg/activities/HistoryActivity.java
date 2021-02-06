@@ -60,13 +60,19 @@ public class HistoryActivity extends AppCompatActivity {
                 Intent i;
                 switch (item.getItemId()) {
                     case R.id.home:
+                        i = new Intent(HistoryActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
                         break;
                     case R.id.history:
-
+                        i = new Intent(HistoryActivity.this, HistoryActivity.class);
+                        startActivity(i);
+                        finish();
                         break;
                     case R.id.saved:
                         i = new Intent(HistoryActivity.this, SavedLocationsActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                 }
                 return true;

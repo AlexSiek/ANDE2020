@@ -76,14 +76,22 @@ public class NotificationActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Intent i;
             switch (item.getItemId()) {
                 case R.id.home:
+                    i = new Intent(NotificationActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
                     break;
                 case R.id.history:
+                    i = new Intent(NotificationActivity.this, HistoryActivity.class);
+                    startActivity(i);
+                    finish();
                     break;
                 case R.id.saved:
-                    Intent i = new Intent(NotificationActivity.this, SavedLocationsActivity.class);
+                    i = new Intent(NotificationActivity.this, SavedLocationsActivity.class);
                     startActivity(i);
+                    finish();
                     break;
             }
             return true;
