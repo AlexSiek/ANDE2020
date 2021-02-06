@@ -116,7 +116,7 @@ public class RecoPageActivity extends AppCompatActivity{
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorPopup("An error has occurred. Please try again");
         }
     }
 
@@ -186,7 +186,7 @@ public class RecoPageActivity extends AppCompatActivity{
             try {
                 generateLocationObjects();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ErrorPopup("An error has occurred. Please try again");
             }
         });
         newThread.start();
@@ -246,7 +246,7 @@ public class RecoPageActivity extends AppCompatActivity{
                             }
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            ErrorPopup("An error has occurred. Please try again");
                         }
                     },
                     error -> ErrorPopup("No internet connection. Please try again.")
