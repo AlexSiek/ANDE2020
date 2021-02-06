@@ -54,6 +54,7 @@ public class NotificationActivity extends AppCompatActivity {
     //Category
     private final ArrayList<String> placeTypes = new ArrayList<>();
     private final ArrayList<String> APIList = new ArrayList<>();
+    private int counter = 0;
 
     public NotificationActivity() {
     }
@@ -67,9 +68,7 @@ public class NotificationActivity extends AppCompatActivity {
         //
         try {
             getLocation();
-        }catch (Exception e){
-            ErrorPopup("An error has occurred. Please try again.");
-        }
+
         //RecyclerView
         bindItemData();
 
@@ -96,6 +95,9 @@ public class NotificationActivity extends AppCompatActivity {
             }
             return true;
         });
+        }catch (Exception e){
+            ErrorPopup("An error has occurred. Please try again.");
+        }
     }
 
     private void getLocation(){
@@ -113,7 +115,6 @@ public class NotificationActivity extends AppCompatActivity {
 
                     latitude = gps.getLatitude();
                     longitude = gps.getLongitude();
-                    int counter = 0;
                     if(latitude == 0){
                         Thread.sleep(1000);
                         getLocation();
@@ -206,25 +207,25 @@ public class NotificationActivity extends AppCompatActivity {
         //Random Diners
         placeTypes("Diners");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A");
             placeTypes.clear();
 
         //Random Clothing
         placeTypes("Clothing");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A");
             placeTypes.clear();
 
         //Random Scenery
         placeTypes("Scenery");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A");
             placeTypes.clear();
 
         //Random Adventure
         placeTypes("Adventure");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A");
             placeTypes.clear();
 
             generateLocationObjects();
@@ -265,11 +266,12 @@ public class NotificationActivity extends AppCompatActivity {
                                             JSONObject opening_hours = results.getJSONObject("opening_hours");
                                             open_now = opening_hours.getBoolean("open_now");
                                         }
-                                        JSONArray photosArr = results.getJSONArray("photos");
-                                        JSONObject PhotoResults = photosArr.getJSONObject(0);
-                                        photo_ref = PhotoResults.getString("photo_reference");
-                                        ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
-
+                                        if (results.has("photos")) {
+                                            JSONArray photosArr = results.getJSONArray("photos");
+                                            JSONObject PhotoResults = photosArr.getJSONObject(0);
+                                            photo_ref = PhotoResults.getString("photo_reference");
+                                            ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A";
+                                        }
                                         if (results.has("rating")) {
                                             rating = results.getDouble("rating");
                                         }

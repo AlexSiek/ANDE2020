@@ -35,9 +35,6 @@
         <activity android:name="com.example.exploresg.activities.AboutActivity">
 
         </activity>
-        <activity android:name="com.example.exploresg.activities.databaseTestActivity">
-
-        </activity>
         <activity android:name="com.example.exploresg.activities.RecoDetailActivity">
 
         </activity>

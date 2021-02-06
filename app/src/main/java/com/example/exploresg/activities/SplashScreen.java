@@ -2,6 +2,7 @@ package com.example.exploresg.activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -22,9 +23,6 @@ import java.util.Calendar;
 
 public class SplashScreen extends AppCompatActivity {
 
-    public static boolean firstTimeSetUp = true;
-    public static boolean wantNotification = false;
-    public static int location = 50;
 
     public static final String MyPREFERNCES = "userPref";
     public static final String ULocation = "locationPref";
@@ -60,29 +58,26 @@ public class SplashScreen extends AppCompatActivity {
             editor.putBoolean(USetUp,false);
             settingUpNotification();
             Log.d("Notification: ", "setted up");
-            editor.commit();
+            editor.apply();
         }
 
 
 
-        Thread splashThread = new Thread() {
-
-            public void run() {
-                try {
-                    // sleep time in milliseconds (3000 = 3sec)
-                    sleep(3000);
-                }  catch(InterruptedException e) {
-                    // Trace the error
-                    e.printStackTrace();
-                } finally
-                {
-                    // Launch the MainActivity class
-                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                    startActivity(intent);
-                }
-
+        Thread splashThread = new Thread(() -> {
+            try {
+                // sleep time in milliseconds (3000 = 3sec)
+                Thread.sleep(3000);
+            }  catch(InterruptedException e) {
+                // Trace the error
+                e.printStackTrace();
+            } finally
+            {
+                // Launch the MainActivity class
+                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                startActivity(intent);
             }
-        };
+
+        });
         // To Start the thread
         splashThread.start();
     }
@@ -113,9 +108,10 @@ public class SplashScreen extends AppCompatActivity {
         Log.d("Notification","Pending intent has been set");
 
         //Alarm are services using the phone's system alarm
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
         Log.d("Notification","Alarm manager has been set");
 
+        assert alarmManager != null;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
         Log.d("Notification","Alarm has been turn on");
     }

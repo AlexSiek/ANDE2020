@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -27,11 +26,8 @@ import com.example.exploresg.recyclerItems.HistoryItem;
 import com.example.exploresg.recyclerItems.ReviewRecycleritemArrayAdapter;
 import com.example.exploresg.recyclerItems.Reviewitem;
 import com.example.exploresg.recyclerItems.SavedItem;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -49,43 +45,48 @@ public class RecoDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recodetail_activity);
-        Intent intent = getIntent();
-        placeId = Objects.requireNonNull(intent.getExtras()).getString("placeID");
-        DatabaseHandler db = new DatabaseHandler(this);
-        if(db.getAllSavedItems() != null) {
-            ImageView btn = findViewById(R.id.saveBtn);
-            savedItem = db.getAllSavedItems();
-            for (int i = 0; i < savedItem.size(); i++) {
-                if(savedItem.get(i).getPlaceId().equals(placeId)){
-                    btn.setImageResource(R.drawable.ic_baseline_bookmark_24);
-                }
-            }
-        }
 
-        if(db.getAllHistoryItems() != null) {
-            //History item
-            ArrayList<ArrayList<HistoryItem>> historyItems = db.getAllHistoryItems();
-            for (int i = 0; i < historyItems.size(); i++) {
-                for(int k = 0 ; k < historyItems.get(i).size(); k++){
-                    historyPlaceID.add(historyItems.get(i).get(k).getPlaceId());
-                    if(k == historyItems.get(i).size() - 1){
-                        if(!historyPlaceID.contains(placeId)){
-                            db.addHistoryItem(placeId);
-                        }else{
-                            db.removeHistoryItemByPlaceId(placeId);
-                            db.addHistoryItem(placeId);
-                        }
+        try {
+            Intent intent = getIntent();
+            placeId = Objects.requireNonNull(intent.getExtras()).getString("placeID");
+            DatabaseHandler db = new DatabaseHandler(this);
+            if (db.getAllSavedItems() != null) {
+                ImageView btn = findViewById(R.id.saveBtn);
+                savedItem = db.getAllSavedItems();
+                for (int i = 0; i < savedItem.size(); i++) {
+                    if (savedItem.get(i).getPlaceId().equals(placeId)) {
+                        btn.setImageResource(R.drawable.ic_baseline_bookmark_24);
                     }
                 }
             }
-        }else{
-            db.addHistoryItem(placeId);
-        }
 
-        //RecyclerView
-        requestQueue= Volley.newRequestQueue(this);
-        // To be called after fetching data - Set Selected Reco Detail Info
-        setRecoDetailData();
+            if (db.getAllHistoryItems() != null) {
+                //History item
+                ArrayList<ArrayList<HistoryItem>> historyItems = db.getAllHistoryItems();
+                for (int i = 0; i < historyItems.size(); i++) {
+                    for (int k = 0; k < historyItems.get(i).size(); k++) {
+                        historyPlaceID.add(historyItems.get(i).get(k).getPlaceId());
+                        if (k == historyItems.get(i).size() - 1) {
+                            if (historyPlaceID.contains(placeId)) {
+                                db.removeHistoryItemByPlaceId(placeId);
+                                db.addHistoryItem(placeId);
+                            } else {
+                                db.addHistoryItem(placeId);
+                            }
+                        }
+                    }
+                }
+            } else {
+                db.addHistoryItem(placeId);
+            }
+
+            //RecyclerView
+            requestQueue = Volley.newRequestQueue(this);
+            // To be called after fetching data - Set Selected Reco Detail Info
+            setRecoDetailData();
+        }catch(Exception e){
+            ErrorPopup();
+        }
     }
 
 
@@ -99,7 +100,7 @@ public class RecoDetailActivity extends AppCompatActivity {
 
             JsonObjectRequest objectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeId+"&fields=photos,name,rating,formatted_address,reviews,url&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
+                    "https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeId+"&fields=photos,name,rating,formatted_address,reviews,url&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A",
                     null,
                     response -> {
                         try {
@@ -125,7 +126,7 @@ public class RecoDetailActivity extends AppCompatActivity {
                                     JSONArray photosArr = results.getJSONArray("photos");
                                     JSONObject PhotoResults = photosArr.getJSONObject(0);
                                     photo_ref = PhotoResults.getString("photo_reference");
-                                    ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+                                    ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A";
                                 }
                                 if (results.has("rating")) {
                                     rating = results.getDouble("rating");

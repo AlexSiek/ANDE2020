@@ -40,83 +40,98 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_activity);
 
-        notificationSwitch = (Switch)findViewById(R.id.notificationSwitch);
-        locationSeekBar = (SeekBar)findViewById(R.id.locationSeekBar);
-        rangeValue = (TextView)findViewById(R.id.rangeValue);
+        try {
+            notificationSwitch = (Switch) findViewById(R.id.notificationSwitch);
+            locationSeekBar = (SeekBar) findViewById(R.id.locationSeekBar);
+            rangeValue = (TextView) findViewById(R.id.rangeValue);
 
-        //Setting seekBar boundaries
-        locationSeekBar.setMax(50);
-        locationSeekBar.setMin(1);
+            //Setting seekBar boundaries
+            locationSeekBar.setMax(50);
+            locationSeekBar.setMin(1);
 
-        // Loading preferences
-        prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
-        int gLocation = prefs.getInt(ULocation,50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
-        boolean gNotification = prefs.getBoolean(UNotification,true);
+            // Loading preferences
+            prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
+            int gLocation = prefs.getInt(ULocation, 50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
+            boolean gNotification = prefs.getBoolean(UNotification, true);
 
-        // Set loaded last set preferences
-        String textValue = "";
-        notificationSwitch.setChecked(gNotification);
-        locationSeekBar.setProgress(gLocation);
-        if(gLocation < 50){
-            textValue = "Within "+Integer.toString(gLocation)+"Km";
-        }else{
-            textValue = "Entire Singapore";
-        }
-        rangeValue.setText(textValue);
-
-        locationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChangedValue = 0;
+            // Set loaded last set preferences
             String textValue = "";
+            notificationSwitch.setChecked(gNotification);
+            locationSeekBar.setProgress(gLocation);
+            if (gLocation < 50) {
+                textValue = "Within " + Integer.toString(gLocation) + "Km";
+            } else {
+                textValue = "Entire Singapore";
+            }
+            rangeValue.setText(textValue);
 
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressChangedValue = progress;
-                if(progressChangedValue < 50){
-                    textValue = "Within "+Integer.toString(progressChangedValue)+"Km";
-                }else{
-                    textValue = "Entire Singapore";
+            locationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                int progressChangedValue = 0;
+                String textValue = "";
+
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    progressChangedValue = progress;
+                    if (progressChangedValue < 50) {
+                        textValue = "Within " + Integer.toString(progressChangedValue) + "Km";
+                    } else {
+                        textValue = "Entire Singapore";
+                    }
+                    rangeValue.setText(textValue);
                 }
-                rangeValue.setText(textValue);
-            }
 
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(SettingActivity.this, "New location range set",Toast.LENGTH_SHORT).show();
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt(ULocation,progressChangedValue);
-                editor.commit();
-            }
-        });
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Intent i;
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        i = new Intent(SettingActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
-                        break;
-                    case R.id.history:
-                        i = new Intent(SettingActivity.this, HistoryActivity.class);
-                        startActivity(i);
-                        finish();
-                        break;
-                    case R.id.saved:
-                        i = new Intent(SettingActivity.this, SavedLocationsActivity.class);
-                        startActivity(i);
-                        finish();
-                        break;
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
                 }
-                return true;
-            }
-        });
+
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    Toast.makeText(SettingActivity.this, "New location range set", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt(ULocation, progressChangedValue);
+                    editor.commit();
+                }
+            });
+
+            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Intent i;
+                    switch (item.getItemId()) {
+                        case R.id.home:
+                            i = new Intent(SettingActivity.this, MainActivity.class);
+                            startActivity(i);
+                            finish();
+                            break;
+                        case R.id.history:
+                            i = new Intent(SettingActivity.this, HistoryActivity.class);
+                            startActivity(i);
+                            finish();
+                            break;
+                        case R.id.saved:
+                            i = new Intent(SettingActivity.this, SavedLocationsActivity.class);
+                            startActivity(i);
+                            finish();
+                            break;
+                    }
+                    return true;
+                }
+            });
+        }catch(Exception e){
+            ErrorPopup();
+        }
     }
+    private void ErrorPopup(){
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage("No internet connection. Please try again.")
+                .setPositiveButton("ok", (dialog, which) -> {
+                    Intent i = new Intent(SettingActivity.this, MainActivity.class);
+                    startActivity(i);
+                })
+                .create().show();
+    }
+
 
     public void onCheck(View v) {
         switch(v.getId()) {

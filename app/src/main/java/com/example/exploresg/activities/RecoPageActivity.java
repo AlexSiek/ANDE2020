@@ -2,15 +2,12 @@ package com.example.exploresg.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +54,7 @@ public class RecoPageActivity extends AppCompatActivity{
     private final ArrayList<String> placeTypes = new ArrayList<>();
     private String category;
     private final ArrayList<String> APIList = new ArrayList<>();
+    private int counter = 0;
 
 
     @Override
@@ -90,7 +88,6 @@ public class RecoPageActivity extends AppCompatActivity{
 
                     latitude = gps.getLatitude();
                     longitude = gps.getLongitude();
-                    int counter = 0;
                     if(latitude == 0){
                         Thread.sleep(1000);
                         getLocation();
@@ -183,7 +180,7 @@ public class RecoPageActivity extends AppCompatActivity{
         String type;
         for(int i = 0; i < placeTypes.size(); i++){
             type = placeTypes.get(i);
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A");
         }
         Thread newThread = new Thread(() -> {
             try {
@@ -230,7 +227,7 @@ public class RecoPageActivity extends AppCompatActivity{
                                             JSONArray photosArr = results.getJSONArray("photos");
                                             JSONObject PhotoResults = photosArr.getJSONObject(0);
                                             photo_ref = PhotoResults.getString("photo_reference");
-                                            ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+                                            ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A";
                                         }
                                         if (results.has("rating")) {
                                             rating = results.getDouble("rating");

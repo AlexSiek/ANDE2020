@@ -1,11 +1,8 @@
 package com.example.exploresg.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,40 +36,45 @@ public class SavedLocationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.savedlocations_activity);
-        requestQueue= Volley.newRequestQueue(this);
 
-        //load saved items from DB
-        DatabaseHandler db = new DatabaseHandler(this);
-        if(db.getAllSavedItems() != null)
-        savedItem = db.getAllSavedItems();
+        try {
+            requestQueue = Volley.newRequestQueue(this);
+
+            //load saved items from DB
+            DatabaseHandler db = new DatabaseHandler(this);
+            if (db.getAllSavedItems() != null)
+                savedItem = db.getAllSavedItems();
 
 
-        //RecyclerView
-        setSavedItems();
+            //RecyclerView
+            setSavedItems();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Intent i;
-            switch (item.getItemId()) {
-                case R.id.home:
-                    i = new Intent(SavedLocationsActivity.this, MainActivity.class);
-                    startActivity(i);
-                    finish();
-                    break;
-                case R.id.history:
-                    i = new Intent(SavedLocationsActivity.this, HistoryActivity.class);
-                    startActivity(i);
-                    finish();
-                    break;
-                case R.id.saved:
-                    i = new Intent(SavedLocationsActivity.this, SavedLocationsActivity.class);
-                    startActivity(i);
-                    finish();
-                    break;
-            }
-            return true;
-        });
+            bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+                Intent i;
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        i = new Intent(SavedLocationsActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                        break;
+                    case R.id.history:
+                        i = new Intent(SavedLocationsActivity.this, HistoryActivity.class);
+                        startActivity(i);
+                        finish();
+                        break;
+                    case R.id.saved:
+                        i = new Intent(SavedLocationsActivity.this, SavedLocationsActivity.class);
+                        startActivity(i);
+                        finish();
+                        break;
+                }
+                return true;
+            });
+        }catch (Exception e){
+            ErrorPopup();
+        }
     }
 
     private void setUIRef()
@@ -103,7 +105,7 @@ public class SavedLocationsActivity extends AppCompatActivity {
             int finalI = i;
             JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                "https://maps.googleapis.com/maps/api/place/details/json?place_id="+savedItem.get(i).getPlaceId()+"&fields=photos,name,rating,vicinity,reviews&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570",
+                "https://maps.googleapis.com/maps/api/place/details/json?place_id="+savedItem.get(i).getPlaceId()+"&fields=photos,name,rating,vicinity,reviews&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A",
                 null,
                     response -> {
                         try {
@@ -123,7 +125,7 @@ public class SavedLocationsActivity extends AppCompatActivity {
                                 JSONArray photosArr = results.getJSONArray("photos");
                                 JSONObject PhotoResults = photosArr.getJSONObject(0);
                                 photo_ref = PhotoResults.getString("photo_reference");
-                                ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570";
+                                ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A";
                             }
                             if (results.has("rating")) {
                                 rating = results.getDouble("rating");

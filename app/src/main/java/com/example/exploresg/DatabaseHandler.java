@@ -1,4 +1,5 @@
 package com.example.exploresg;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -81,24 +82,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addHistoryItemTesting(String placeId, String timeStamp) {//DO NOT USE THIS, STRICTLY FOR TESTING
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_PLACE_ID, placeId);
-        values.put(KEY_TIMESTAMP, timeStamp);
-
-        db.insert(TABLE_HISTORY, null, values);
-        Log.d("Database","Inserted History Item With PlaceId of "+ placeId);
-
-        db.close();
-    }
-
     //Reads
     public ArrayList<ArrayList<HistoryItem>> getAllHistoryItems(){//Sorted by dates
         SQLiteDatabase db = this.getReadableDatabase();
 
-        ArrayList<ArrayList<HistoryItem>> returnedArray = new ArrayList<>();
+        ArrayList<ArrayList<HistoryItem>> returnedArray;
         //public Cursor query (String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
         Cursor cursor = db.query( TABLE_HISTORY,
                 new String[] {KEY_ITEM_ID,KEY_PLACE_ID,KEY_TIMESTAMP},
@@ -124,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ArrayList<SavedItem> returnedArray = new ArrayList<>();
         //public Cursor query (String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
-        Cursor cursor = db.query( TABLE_SAVED,
+        @SuppressLint("Recycle") Cursor cursor = db.query( TABLE_SAVED,
                 new String[] {KEY_ITEM_ID,KEY_PLACE_ID,KEY_TIMESTAMP},
                 null,
                 null,
@@ -163,26 +151,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void removeSavedItemByItemId(int itemId){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SAVED, KEY_ITEM_ID + "= ?", new String[] {String.valueOf(itemId)});
-        db.close();
-    }
-
     public void removeHistoryItemByPlaceId(String placeId){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_HISTORY, KEY_PLACE_ID + "= ?", new String[] {placeId});
         db.close();
     }
 
-    public void removeHistoryItemByItemId(int itemId){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_HISTORY, KEY_ITEM_ID + "= ?", new String[] {String.valueOf(itemId)});
-        db.close();
-    }
-
     public boolean compareSameDate(long firstDate, long secondDate) {
-        DateFormat df = new SimpleDateFormat("dd:MM:yyyy");
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("dd:MM:yyyy");
         Log.d("Database", "compareSameDate: "+ df.format(firstDate) +"vs"+df.format(secondDate)+ (df.format(firstDate).equals(df.format(secondDate))));
         return df.format(firstDate).equals(df.format(secondDate));
     }
@@ -190,12 +166,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<ArrayList<HistoryItem>> sortHistoryItemIntoArray(Cursor dbResults){
 
         Log.d("Database","Storing Here");
-        ArrayList<ArrayList<HistoryItem>> talliedArray = new ArrayList<ArrayList<HistoryItem>>();//Sorted array
+        ArrayList<ArrayList<HistoryItem>> talliedArray = new ArrayList<>();//Sorted array
 
         dbResults.moveToFirst();
         long currentDate = dbResults.getLong(2);
         do{
-            ArrayList<HistoryItem> secondaryArray = new ArrayList<HistoryItem>();
+            ArrayList<HistoryItem> secondaryArray = new ArrayList<>();
 
             //While loop will always run at least once,
             while(dbResults.getPosition() < dbResults.getCount() && compareSameDate(currentDate, dbResults.getLong(2))){
@@ -210,15 +186,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return talliedArray;
     }
 
-    public void printAllResults(Cursor dbResults){
-        dbResults.moveToFirst();
-        do{
-            Log.d("Results", "ItemId: " + dbResults.getInt(0) + ", PlaceId: " + dbResults.getString(1) + ", TimeStamp: " + dbResults.getLong(2));
-        }while(dbResults.moveToNext());
-    }
-
     public void printHistoryResults(ArrayList<ArrayList<HistoryItem>> printingArr){
-        DateFormat df = new SimpleDateFormat("dd:MM:yyyy");
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("dd:MM:yyyy");
         Log.d("Results","Number of dates: " + printingArr.size());
         for(int i = 0; i < printingArr.size(); i++){
             ArrayList<HistoryItem> recordsForADate = printingArr.get(i);
