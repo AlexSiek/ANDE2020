@@ -260,18 +260,17 @@ public class NotificationActivity extends AppCompatActivity {
 
                                         boolean open_now = false;
                                         double rating = 0.0;
-                                        String ImgUrl = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+                                        String ImgUrl;
                                         String photo_ref;
                                         if (results.has("opening_hours")) {
                                             JSONObject opening_hours = results.getJSONObject("opening_hours");
                                             open_now = opening_hours.getBoolean("open_now");
                                         }
-                                        if (results.has("photos")) {
                                             JSONArray photosArr = results.getJSONArray("photos");
                                             JSONObject PhotoResults = photosArr.getJSONObject(0);
                                             photo_ref = PhotoResults.getString("photo_reference");
                                             ImgUrl = "https://maps.googleapis.com/maps/api/place/photo?maxheight=110&photoreference=" + photo_ref + "&key=AIzaSyCck4O2J1amBwQVr0soFFaQcOmDiYvwY1A";
-                                        }
+
                                         if (results.has("rating")) {
                                             rating = results.getDouble("rating");
                                         }
