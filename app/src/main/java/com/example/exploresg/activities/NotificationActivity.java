@@ -198,25 +198,25 @@ public class NotificationActivity extends AppCompatActivity {
         //Random Diners
         placeTypes("Diners");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570&keyword=singapore");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
             placeTypes.clear();
 
         //Random Clothing
         placeTypes("Clothing");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570&keyword=singapore");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
             placeTypes.clear();
 
         //Random Scenery
         placeTypes("Scenery");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570&keyword=singapore");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
             placeTypes.clear();
 
         //Random Adventure
         placeTypes("Adventure");
             type = placeTypes.get(rand.nextInt((placeTypes.size()-1)));
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570&keyword=singapore");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
             placeTypes.clear();
 
             generateLocationObjects();
@@ -247,7 +247,6 @@ public class NotificationActivity extends AppCompatActivity {
                                 if((businessStatus.equals("OPERATIONAL") ||businessStatus.equals("CLOSED_TEMPORARILY"))) {
                                     String name = results.getString("name");
                                     String vicinity = results.getString("vicinity");
-                                    if (vicinity.contains("Singapore")) {
                                         String placeId = results.getString("place_id");
 
                                         boolean open_now = false;
@@ -268,7 +267,7 @@ public class NotificationActivity extends AppCompatActivity {
                                         }
                                         locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, NotificationActivity.this, placeId));
                                         break;
-                                    }
+
                                 }
                                 }
                             }
@@ -334,7 +333,6 @@ public class NotificationActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
         int gLocation = prefs.getInt(ULocation,50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
         distance.setText("Within " + gLocation + "km");
-
     }
 
     protected void onRestart() {

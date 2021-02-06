@@ -183,7 +183,7 @@ public class RecoPageActivity extends AppCompatActivity{
         String type;
         for(int i = 0; i < placeTypes.size(); i++){
             type = placeTypes.get(i);
-            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570&keyword=singapore");
+            APIList.add("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latitude+","+longitude+"&radius="+ meters +"&type="+type+"&key=AIzaSyADxiKqfRs0ttZ71BUc5HJ_3dZBTw2B570");
         }
         Thread newThread = new Thread(() -> {
             try {
@@ -216,7 +216,6 @@ public class RecoPageActivity extends AppCompatActivity{
                                 if((businessStatus.equals("OPERATIONAL") ||businessStatus.equals("CLOSED_TEMPORARILY"))) {
                                     String name = results.getString("name");
                                     String vicinity = results.getString("vicinity");
-                                    if (vicinity.contains("Singapore")) {
                                         String placeId = results.getString("place_id");
 
                                         boolean open_now = false;
@@ -238,7 +237,7 @@ public class RecoPageActivity extends AppCompatActivity{
                                         }
                                         locationItem.add(new SubRecycleritem(ImgUrl, name, rating, vicinity, open_now, RecoPageActivity.this, placeId));
 
-                                    }
+
                                 }
                             }
                             if (finalI == APIList.size() - 1 ) {
