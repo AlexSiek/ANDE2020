@@ -58,7 +58,7 @@ public class SplashScreen extends AppCompatActivity {
             editor.putBoolean(USetUp,false);
             settingUpNotification();
             Log.d("Notification: ", "setted up");
-            editor.apply();
+            editor.commit();
         }
 
 
