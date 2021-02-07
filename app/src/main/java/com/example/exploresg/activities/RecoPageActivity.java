@@ -171,7 +171,8 @@ public class RecoPageActivity extends AppCompatActivity{
     private void jsonParseReco(){
 
         SharedPreferences prefs = getSharedPreferences(MyPREFERNCES, MODE_PRIVATE);
-        int gLocation = prefs.getInt(ULocation,50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
+        // defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
+        int gLocation = prefs.getInt(ULocation,50);
         int meters = gLocation * 1000;
         TextView distance = findViewById(R.id.distanceText);
         distance.setText("Within " + gLocation + "km");

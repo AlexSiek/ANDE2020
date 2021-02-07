@@ -19,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import com.example.exploresg.activities.MainActivity;
+import com.example.exploresg.activities.NotificationActivity;
+import com.example.exploresg.activities.SavedLocationsActivity;
+
 public class LocationTracker extends Service implements LocationListener {
     private final Context mContext;
     // flag for GPS status
@@ -214,7 +218,8 @@ public class LocationTracker extends Service implements LocationListener {
         // on pressing cancel button
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+                Intent intent = new Intent(LocationTracker.this, MainActivity.class);
+                mContext.startActivity(intent);
             }
         });
 
