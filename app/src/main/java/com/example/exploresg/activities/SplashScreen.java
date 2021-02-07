@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.toolbox.Volley;
 import com.example.exploresg.DatabaseHandler;
 import com.example.exploresg.R;
+import com.example.exploresg.notification.NotificationReceiver;
 
 import java.util.Calendar;
 
@@ -95,6 +96,7 @@ public class SplashScreen extends AppCompatActivity {
     }
     
     public void settingUpNotification(){
+
         //Setting intent time/notification time
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 12);
@@ -111,7 +113,7 @@ public class SplashScreen extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
         Log.d("Notification","Alarm manager has been set");
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(), pendingIntent);
         Log.d("Notification","Alarm has been turn on");
     }
 }

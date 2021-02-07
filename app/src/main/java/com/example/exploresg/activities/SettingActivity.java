@@ -192,7 +192,7 @@ public class SettingActivity extends AppCompatActivity {
         Log.d("Notification","Alarm manager has been set");
 
         if(isOn){
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(), pendingIntent);
             Log.d("Notification","Alarm has been turn on");
         }else{
             alarmManager.cancel(pendingIntent);

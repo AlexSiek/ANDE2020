@@ -1,5 +1,6 @@
 package com.example.exploresg.notification;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,11 +15,14 @@ import androidx.core.app.JobIntentService;
 import com.example.exploresg.R;
 import com.example.exploresg.activities.NotificationActivity;
 
+import java.util.Calendar;
+
 public class NotificationService extends JobIntentService {
     //
     private static final String NOTIFICATION_CHANNEL_ID = "404";
     static final int JOB_ID = 1000;
     private NotificationManager notificationManager;
+    private static final int NOTIFICATION_REMINDER = 1;
 
     static void enqueueWork(Context context, Intent work) {
         enqueueWork(context, NotificationService.class, JOB_ID, work);
@@ -52,6 +56,21 @@ public class NotificationService extends JobIntentService {
         // Will display the notification in the notification bar
         notificationManager.notify(1, builder.build());
         Log.d("Notification","Notification has been fired");
+        setUpNextExact();
+    }
+
+
+
+    public void setUpNextExact(){//setExactAndAllowWhileIdle does not repeat, the only work around is to do this
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Intent notifyIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_REMINDER, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(), pendingIntent);
+        Log.d("Notification","Set up new setExactAndAllowWhileIdle");
     }
 
 }
