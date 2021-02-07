@@ -54,6 +54,11 @@ public class SettingActivity extends AppCompatActivity {
             int gLocation = prefs.getInt(ULocation, 50);// defValue is used to set value if pref doesn't exist. 50km is longest radius of Singapore
             boolean gNotification = prefs.getBoolean(UNotification, true);
 
+            //  If notification is true set it up
+            if (gNotification){
+                switchNotification(true);
+            }
+
             // Set loaded last set preferences
             String textValue = "";
             notificationSwitch.setChecked(gNotification);

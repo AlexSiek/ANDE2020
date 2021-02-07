@@ -65,9 +65,6 @@ public class SavedLocationsActivity extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.saved:
-                        i = new Intent(SavedLocationsActivity.this, SavedLocationsActivity.class);
-                        startActivity(i);
-                        finish();
                         break;
                 }
                 return true;

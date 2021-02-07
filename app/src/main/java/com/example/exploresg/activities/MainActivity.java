@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Intent i;
                 switch (item.getItemId()) {
                     case R.id.home:
-                        i = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
                         break;
                     case R.id.history:
                         i = new Intent(MainActivity.this, HistoryActivity.class);
