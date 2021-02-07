@@ -281,7 +281,7 @@ public class NotificationActivity extends AppCompatActivity {
                                 }
                             }
                             if (finalI == APIList.size() - 1 ) {
-                                Thread.sleep(1000);
+                                Thread.sleep(200);
                                 try {
                                     setUIRef();
                                 }catch(Exception e){
